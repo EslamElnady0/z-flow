@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:z_flow1/screens/signup_screen.dart';
-import 'package:z_flow1/screens/tasks_screen.dart';
+import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
+import 'package:z_flow1/features/tasks/presentation/screens/home_screen.dart';
 
 import '../widgets/auth_bottom_screen_button.dart';
 import '../widgets/auth_screens_header.dart';
@@ -24,15 +24,21 @@ class AuthScreen extends StatelessWidget {
           const Spacer(
             flex: 2,
           ),
-           CustomAuthButton(title: "Log in",onTap: (){
-             Navigator.pushNamed(context, LogInScreen.pageName);
-           },),
+          CustomAuthButton(
+            title: "Log in",
+            onTap: () {
+              Navigator.pushNamed(context, LogInScreen.pageName);
+            },
+          ),
           const SizedBox(
             height: 10,
           ),
-           CustomAuthButton(title: "Sign up",onTap: (){
-             Navigator.pushNamed(context, SignUpScreen.pageName);
-           },),
+          CustomAuthButton(
+            title: "Sign up",
+            onTap: () {
+              Navigator.pushNamed(context, SignUpScreen.pageName);
+            },
+          ),
           const Spacer(
             flex: 1,
           ),
@@ -49,12 +55,15 @@ class AuthScreen extends StatelessWidget {
           const Spacer(
             flex: 2,
           ),
-           Padding(
-             padding: const EdgeInsets.only(right: 10,bottom: 16),
-             child: AuthBottomButtonForward(onTap:(){
-               Navigator.pushReplacementNamed(context, TasksScreen.pageName);
-             },title: 'Skip',icon: Icons.keyboard_double_arrow_right_outlined,)
-           )
+          Padding(
+              padding: const EdgeInsets.only(right: 10, bottom: 16),
+              child: AuthBottomButtonForward(
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, HomePage.pageName);
+                },
+                title: 'Skip',
+                icon: Icons.keyboard_double_arrow_right_outlined,
+              ))
         ],
       )),
     );

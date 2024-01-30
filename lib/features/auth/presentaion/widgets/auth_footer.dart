@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:z_flow1/screens/tasks_screen.dart';
+import 'package:z_flow1/features/tasks/presentation/screens/home_screen.dart';
 
 import 'auth_bottom_screen_button.dart';
 
@@ -18,7 +18,7 @@ class AuthFooter extends StatelessWidget {
       const Spacer(),
       AuthBottomButtonForward(
           onTap: () {
-            Navigator.pushReplacementNamed(context, TasksScreen.pageName);
+            Navigator.pushReplacementNamed(context, HomePage.pageName);
           },
           title: "Skip",
           icon: Icons.keyboard_double_arrow_right_outlined),

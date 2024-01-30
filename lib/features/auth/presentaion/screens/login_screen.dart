@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:z_flow1/screens/motavation_splash_screen.dart';
-import 'package:z_flow1/screens/password_recovery_screen.dart';
-import 'package:z_flow1/util/context_helpers.dart';
+import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
+import 'package:z_flow1/features/auth/presentaion/screens/password_recovery_screen.dart';
+import 'package:z_flow1/core/util/context_helpers.dart';
 
 import '../widgets/auth_footer.dart';
 import '../widgets/auth_screens_header.dart';
@@ -45,10 +45,10 @@ class _LogInScreenState extends State<LogInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           CustomTextFormField(
-                            validate: (data){
-                              if(data!.isEmpty){
+                            validate: (data) {
+                              if (data!.isEmpty) {
                                 return "this field is required";
-                        }
+                              }
                               return null;
                             },
                             autoValidateMode: autoValidateMode,
@@ -57,12 +57,12 @@ class _LogInScreenState extends State<LogInScreen> {
                             prefixIcon: Icons.email_outlined,
                             isPassword: false,
                           ),
-                           SizedBox(
-                            height: context.height*0.0295566502463054,
+                          SizedBox(
+                            height: context.height * 0.0295566502463054,
                           ),
                           CustomTextFormField(
-                            validate: (data){
-                              if(data!.isEmpty){
+                            validate: (data) {
+                              if (data!.isEmpty) {
                                 return "this field is required";
                               }
                               return null;
@@ -83,7 +83,8 @@ class _LogInScreenState extends State<LogInScreen> {
                           ),
                           TextButton(
                               onPressed: () {
-                                Navigator.pushReplacementNamed(context, PasswordRecoveryScreen.pageName);
+                                Navigator.pushReplacementNamed(
+                                    context, PasswordRecoveryScreen.pageName);
                               },
                               child: const Text(
                                 "forgot password?",
@@ -93,23 +94,23 @@ class _LogInScreenState extends State<LogInScreen> {
                             height: context.height * 0.1,
                           ),
                           Center(
-                            child: CustomAuthButton(title: "Log in", onTap: () {
-                            if(formKey.currentState!.validate()){
-                                  Navigator.pushReplacementNamed(context, MotivationScreen.pageName);
-                            }else{
-                              autoValidateMode= AutovalidateMode.always;
-                              setState(() {
-
-                              });
-                            }
-                            }),
+                            child: CustomAuthButton(
+                                title: "Log in",
+                                onTap: () {
+                                  if (formKey.currentState!.validate()) {
+                                    Navigator.pushReplacementNamed(
+                                        context, MotivationScreen.pageName);
+                                  } else {
+                                    autoValidateMode = AutovalidateMode.always;
+                                    setState(() {});
+                                  }
+                                }),
                           ),
                         ],
                       ),
                     )),
-
                 const Spacer(),
-               const AuthFooter()
+                const AuthFooter()
               ],
             ),
           ),
