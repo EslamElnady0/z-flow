@@ -15,36 +15,36 @@ class BottomNavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          height: 4.h,
-          width: 375.w * 0.2,
-          decoration: ShapeDecoration(
-              color: ctx.read<BottomNavBarCubit>().index == index
-                  ? Colorrs.kCyan
-                  : Colors.transparent,
-              shadows: [
-                BoxShadow(
-                  color: ctx.read<BottomNavBarCubit>().index == index
-                      ? const Color(0x5937D3FF)
-                      : Colors.transparent,
-                  blurRadius: 4,
-                  offset: const Offset(0, 4),
-                  spreadRadius: 0,
-                )
-              ],
-              shape: const RoundedRectangleBorder()),
-        ),
-        const Spacer(
-          flex: 2,
-        ),
-        GestureDetector(
-          onTap: () {
-            ctx.read<BottomNavBarCubit>().bottomNaveBarChanged(index);
-          },
-          child: Stack(children: [
+    return GestureDetector(
+      onTap: () {
+        ctx.read<BottomNavBarCubit>().bottomNaveBarChanged(index);
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 4.h,
+            width: 375.w * 0.2,
+            decoration: ShapeDecoration(
+                color: ctx.read<BottomNavBarCubit>().index == index
+                    ? Colorrs.kCyan
+                    : Colors.transparent,
+                shadows: [
+                  BoxShadow(
+                    color: ctx.read<BottomNavBarCubit>().index == index
+                        ? const Color(0x5937D3FF)
+                        : Colors.transparent,
+                    blurRadius: 4,
+                    offset: const Offset(0, 4),
+                    spreadRadius: 0,
+                  )
+                ],
+                shape: const RoundedRectangleBorder()),
+          ),
+          const Spacer(
+            flex: 2,
+          ),
+          Stack(children: [
             Padding(
               padding: EdgeInsets.only(top: 4.h),
               child: SvgPicture.asset(
@@ -71,11 +71,11 @@ class BottomNavBarItem extends StatelessWidget {
                   : BoxFit.scaleDown,
             ),
           ]),
-        ),
-        const Spacer(
-          flex: 1,
-        )
-      ],
+          const Spacer(
+            flex: 1,
+          )
+        ],
+      ),
     );
   }
 }

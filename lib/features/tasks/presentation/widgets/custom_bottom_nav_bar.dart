@@ -29,7 +29,7 @@ class CustomBottomNavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ...bottomNavBarItems.asMap().entries.map((entry) {
+          ...Constants.bottomNavBarItems.asMap().entries.map((entry) {
             int index = entry.key;
             String value = entry.value;
             return BottomNavBarItem(
