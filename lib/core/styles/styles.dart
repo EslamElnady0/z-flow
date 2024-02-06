@@ -47,4 +47,11 @@ class Styles {
     fontWeight: FontWeight.w700,
     height: 0,
   );
+  static TextStyle style32 = TextStyle(
+    color: Colorrs.kGreyDark,
+    fontSize: 24.sp,
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.w400,
+    height: 0,
+  );
 }

@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
+import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/auth_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/login_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/password_recovery_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
+import 'package:z_flow1/features/tasks/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/tasks/presentation/screens/home_screen.dart';
 
 Future<void> main() async {
-    await Hive.initFlutter();
+  await Hive.initFlutter();
 
-  //Hive.registerAdapter(NoteModelAdapter());
-  // await Hive.openBox<NoteModel>(kNotesBox);
+  Hive.registerAdapter(TaskModelAdapter());
+  await Hive.openBox<TaskModel>(Constants.tasksBox);
 
   runApp(const ZFlowApp());
 }
@@ -30,6 +32,8 @@ class ZFlowApp extends StatelessWidget {
           locale: const Locale("en-US"),
           theme: ThemeData(
               fontFamily: "Inter",
+              popupMenuTheme: PopupMenuThemeData(
+                  color: Colors.white, surfaceTintColor: Colors.white),
               scaffoldBackgroundColor: Colorrs.kBackground),
           routes: {
             AuthScreen.pageName: (context) => const AuthScreen(),

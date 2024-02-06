@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Constants {
+  static const String tasksBox = "tasks-box";
   static List<String> bottomNavBarItems = [
     "assets/images/tasks.svg",
     "assets/images/date.svg",
@@ -10,6 +11,22 @@ class Constants {
     "assets/images/happits.svg",
     "assets/images/account.svg",
   ];
+
+  static const List<Map<String, dynamic>> popUpMenuItems = [
+    {
+      'title': "المفضلة",
+      "icon": FontAwesomeIcons.star,
+    },
+    {
+      'title': "تعديل",
+      "icon": FontAwesomeIcons.penToSquare,
+    },
+    {
+      'title': "حذف",
+      "icon": FontAwesomeIcons.trash,
+    },
+  ];
+
   static List<Map<String, dynamic>> drawerItems = [
     {
       "title": "فتح جلسة عمل",
@@ -81,4 +98,11 @@ class Constants {
         0.8,
         1
       ]);
+
+  static OutlineInputBorder addTaskTextfieldBorder = OutlineInputBorder(
+    borderSide: const BorderSide(
+      color: Colors.white,
+    ),
+    borderRadius: BorderRadius.circular(8.r),
+  );
 }

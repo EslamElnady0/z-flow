@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 
-AppBar buildCustomAppBar({required void Function()? onMenuPressed}) {
+AppBar buildCustomAppBar(
+    {void Function()? onLeadingPressed, required IconData leading}) {
   return AppBar(
     backgroundColor: Colorrs.kWhite,
     actions: [
@@ -16,9 +17,9 @@ AppBar buildCustomAppBar({required void Function()? onMenuPressed}) {
       ),
     ],
     leading: IconButton(
-        onPressed: onMenuPressed,
+        onPressed: onLeadingPressed,
         icon: Icon(
-          Icons.menu,
+          leading,
           size: 30.r,
         )),
     elevation: 2,

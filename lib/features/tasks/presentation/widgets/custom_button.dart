@@ -6,15 +6,17 @@ import 'package:z_flow1/core/styles/styles.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
+  final void Function()? onTap;
   const CustomButton({
     super.key,
     required this.text,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         height: 62.h,
         margin: EdgeInsets.symmetric(horizontal: 48.w, vertical: 14.h),

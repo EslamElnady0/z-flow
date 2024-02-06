@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:z_flow1/features/tasks/presentation/cubits/cubit/bottom_nav_bar_cubit.dart';
+import 'package:z_flow1/features/tasks/presentation/ui%20cubits/cubit/bottom_nav_bar_cubit.dart';
 
 import '../../../../core/colors/colorrs.dart';
 
