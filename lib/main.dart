@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/auth_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/login_screen.dart';
@@ -8,7 +9,12 @@ import 'package:z_flow1/features/auth/presentaion/screens/password_recovery_scre
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
 import 'package:z_flow1/features/tasks/presentation/screens/home_screen.dart';
 
-main() {
+Future<void> main() async {
+    await Hive.initFlutter();
+
+  //Hive.registerAdapter(NoteModelAdapter());
+  // await Hive.openBox<NoteModel>(kNotesBox);
+
   runApp(const ZFlowApp());
 }
 
@@ -21,6 +27,7 @@ class ZFlowApp extends StatelessWidget {
       designSize: const Size(375, 812),
       builder: ((context, child) {
         return MaterialApp(
+          locale: const Locale("en-US"),
           theme: ThemeData(
               fontFamily: "Inter",
               scaffoldBackgroundColor: Colorrs.kBackground),
