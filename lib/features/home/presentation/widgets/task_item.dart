@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
-import 'package:z_flow1/features/tasks/presentation/screens/edit_task_screen.dart';
+import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
+import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
+import 'package:z_flow1/features/home/presentation/screens/edit_task_screen.dart';
 
 class TaskItem extends StatelessWidget {
-  const TaskItem({
-    super.key,
-  });
+  final TaskModel taskModel;
+  const TaskItem({super.key, required this.taskModel});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class TaskItem extends StatelessWidget {
             child: Center(
                 child: Row(
               children: [
-                Text('هذا مجرد نص تجريبي فقط', style: Styles.style16),
+                Text(taskModel.title, style: Styles.style16),
                 const Spacer(),
                 PopupMenuButton(
                     splashRadius: 0.1,
@@ -52,8 +54,14 @@ class TaskItem extends StatelessWidget {
                               onTap: () {
                                 if (index == 1) {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (_) => EditTaskScreen()));
+                                      builder: (_) => EditTaskScreen(
+                                            taskModel: taskModel,
+                                          )));
                                 }
+                                if (index == 2) {
+                                  taskModel.delete();
+                                  context.read<GetTaskCubit>().getTasks();
+                                } else {}
                               },
                               child: Row(
                                 children: [

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/custom_button.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/task_item.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/title_text_widget.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_button.dart';
+import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class HabitsScreen extends StatelessWidget {
   const HabitsScreen({super.key});
@@ -28,8 +27,6 @@ class HabitsScreen extends StatelessWidget {
         SizedBox(
           height: 8.h,
         ),
-        const TaskItem(),
-        const TaskItem(),
         const Spacer(),
         const CustomButton(
           text: "إضافة عادة جديدة",

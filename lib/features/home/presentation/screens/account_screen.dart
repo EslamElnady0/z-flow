@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/custom_auth_button.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/custom_tasks_stats_title.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_auth_button.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_tasks_stats_title.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});

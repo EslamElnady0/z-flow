@@ -6,9 +6,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
-import 'package:z_flow1/features/tasks/presentation/ui%20cubits/cubit/bottom_nav_bar_cubit.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/task_item.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/title_text_widget.dart';
+import 'package:z_flow1/features/home/presentation/ui%20cubits/cubit/bottom_nav_bar_cubit.dart';
+import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class DateScreen extends StatelessWidget {
   const DateScreen({super.key});
@@ -94,7 +93,7 @@ class DateScreen extends StatelessWidget {
           SizedBox(
             height: 24.h,
           ),
-          const TaskItem()
+          // const TaskItem()
         ],
       ),
     );

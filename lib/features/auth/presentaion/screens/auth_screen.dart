@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
-import 'package:z_flow1/features/tasks/presentation/screens/home_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 
 import '../widgets/auth_bottom_screen_button.dart';
 import '../widgets/auth_screens_header.dart';

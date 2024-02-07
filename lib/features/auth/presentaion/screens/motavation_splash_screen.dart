@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
-import 'package:z_flow1/features/tasks/presentation/screens/home_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/core/util/context_helpers.dart';
 
 class MotivationScreen extends StatefulWidget {

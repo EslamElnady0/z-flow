@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/styles/styles.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/title_text_widget.dart';
+import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class CustomTasksStatsTitle extends StatelessWidget {
   final String text;

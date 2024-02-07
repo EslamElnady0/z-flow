@@ -5,14 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
-import 'package:z_flow1/features/tasks/presentation/screens/account_screen.dart';
-import 'package:z_flow1/features/tasks/presentation/screens/date_screen.dart';
-import 'package:z_flow1/features/tasks/presentation/screens/habits_screen.dart';
-import 'package:z_flow1/features/tasks/presentation/screens/tasks_screen.dart';
-import 'package:z_flow1/features/tasks/presentation/screens/usage_screen.dart';
-import 'package:z_flow1/features/tasks/presentation/ui%20cubits/cubit/bottom_nav_bar_cubit.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/custom_appbar.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/custom_bottom_nav_bar.dart';
+import 'package:z_flow1/features/home/presentation/screens/account_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/date_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/habits_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/tasks_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/usage_screen.dart';
+import 'package:z_flow1/features/home/presentation/ui%20cubits/cubit/bottom_nav_bar_cubit.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_appbar.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   static String pageName = 'homeScreen';

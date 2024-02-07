@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:z_flow1/features/tasks/presentation/widgets/custom_usage_button.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/title_text_widget.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_usage_button.dart';
+import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class UsageScreen extends StatelessWidget {
   const UsageScreen({super.key});

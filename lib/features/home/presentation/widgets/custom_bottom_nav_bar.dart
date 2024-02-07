@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
-import 'package:z_flow1/features/tasks/presentation/widgets/bottom_nav_bar_item.dart';
+import 'package:z_flow1/features/home/presentation/widgets/bottom_nav_bar_item.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final BuildContext ctx;

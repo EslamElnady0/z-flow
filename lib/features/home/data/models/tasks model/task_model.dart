@@ -11,7 +11,7 @@ class TaskModel extends HiveObject {
   @HiveField(2)
   final String createdAt;
   @HiveField(3)
-  final String deadline;
+  String deadline;
   @HiveField(4)
   String sideTask;
 
