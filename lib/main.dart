@@ -9,6 +9,7 @@ import 'package:z_flow1/features/auth/presentaion/screens/login_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/password_recovery_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
+import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/add%20task%20cubit/add_task_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
@@ -35,6 +36,8 @@ class ZFlowApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (context) => AddTaskCubit()),
             BlocProvider(create: (context) => GetTaskCubit()..getTasks()),
+            BlocProvider(
+                create: (context) => GetFavouriteCubit()..getFavouriteTasks()),
           ],
           child: MaterialApp(
             locale: const Locale("en-US"),

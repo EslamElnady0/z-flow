@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:z_flow1/features/drawer/presentation/screens/favourite_tasks_screen.dart';
 
 class Constants {
   static const String tasksBox = "tasks-box";
+  static const String favouriteTasksBox = "favourite-tasks-box";
   static List<String> bottomNavBarItems = [
     "assets/images/tasks.svg",
     "assets/images/date.svg",
@@ -12,7 +14,7 @@ class Constants {
     "assets/images/account.svg",
   ];
 
-  static const List<Map<String, dynamic>> popUpMenuItems = [
+  static List<Map<String, dynamic>> popUpMenuItems = [
     {
       'title': "المفضلة",
       "icon": FontAwesomeIcons.star,
@@ -68,6 +70,21 @@ class Constants {
       "title": "مشاركة التطبيق",
       "icon": FontAwesomeIcons.shareNodes,
     },
+  ];
+  static const List<Widget> drawerScreens = [
+    Scaffold(),
+    FavouriteTasksScreen(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
   ];
 
   static BoxShadow shadow = const BoxShadow(

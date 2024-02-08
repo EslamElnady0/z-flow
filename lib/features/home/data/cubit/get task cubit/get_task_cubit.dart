@@ -9,7 +9,8 @@ part 'get_task_state.dart';
 class GetTaskCubit extends Cubit<GetTaskState> {
   GetTaskCubit() : super(GetTaskInitial());
 
-  List<TaskModel>? tasksList = [];
+  List<TaskModel> tasksList = [];
+  List<TaskModel> favouriteTasksList = [];
 
   getTasks() {
     var tasksBox = Hive.box<TaskModel>(Constants.tasksBox);

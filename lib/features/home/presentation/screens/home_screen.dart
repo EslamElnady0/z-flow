@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:z_flow1/core/colors/colorrs.dart';
-import 'package:z_flow1/core/constants/contstants.dart';
-import 'package:z_flow1/core/styles/styles.dart';
+import 'package:flutter_svg/svg.dart';
+
 import 'package:z_flow1/features/home/presentation/screens/account_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/date_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/habits_screen.dart';
@@ -13,6 +11,7 @@ import 'package:z_flow1/features/home/presentation/screens/usage_screen.dart';
 import 'package:z_flow1/features/home/presentation/ui%20cubits/cubit/bottom_nav_bar_cubit.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_bottom_nav_bar.dart';
+import 'package:z_flow1/features/drawer/presentation/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
   static String pageName = 'homeScreen';
@@ -41,9 +40,16 @@ class _HomePageState extends State<HomePage> {
             builder: (context, state) {
               return Scaffold(
                 key: _scaffoldKey,
-                drawer: const DrawerWidget(),
-                appBar: buildCustomAppBar(
-                    onLeadingPressed: openDrawer, leading: Icons.menu),
+                drawer: const CustomDrawer(),
+                appBar: buildCustomAppBar(actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset(
+                      "assets/images/search.svg",
+                      height: 24.r,
+                    ),
+                  ),
+                ], onLeadingPressed: openDrawer, leading: Icons.menu),
                 body: switch (context.read<BottomNavBarCubit>().index) {
                   0 => const TasksScreen(),
                   1 => const DateScreen(),
@@ -59,59 +65,5 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ));
-  }
-}
-
-class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      width: 250.w,
-      shape: const BeveledRectangleBorder(),
-      child: Container(
-        decoration: BoxDecoration(
-            gradient: Constants.zFlowGradient, borderRadius: BorderRadius.zero),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 62.h,
-            ),
-            Image.asset("assets/images/11 1.png"),
-            Image.asset(
-              "assets/images/Z-Flow.png",
-              height: 26.h,
-              width: 84.w,
-            ),
-            SizedBox(
-              height: 18.h,
-            ),
-            const Divider(
-              color: Colorrs.kWhite,
-            ),
-            Expanded(
-              child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: Constants.drawerItems.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                        title: Text(
-                          Constants.drawerItems[index]["title"]!,
-                          style: Styles.style16.copyWith(color: Colors.white),
-                        ),
-                        trailing: FaIcon(
-                          Constants.drawerItems[index]["icon"]!,
-                          color: Colors.white,
-                          size: 20.r,
-                        ));
-                  }),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }

@@ -15,7 +15,7 @@ class TasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GetTaskCubit, GetTaskState>(
       builder: (context, state) {
-        if (context.read<GetTaskCubit>().tasksList!.isEmpty) {
+        if (context.read<GetTaskCubit>().tasksList.isEmpty) {
           return Column(
             children: [
               SizedBox(
@@ -64,11 +64,11 @@ class TasksScreen extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: context.read<GetTaskCubit>().tasksList!.length,
+                  itemCount: context.read<GetTaskCubit>().tasksList.length,
                   itemBuilder: (context, index) {
                     return TaskItem(
                         taskModel:
-                            context.read<GetTaskCubit>().tasksList![index]);
+                            context.read<GetTaskCubit>().tasksList[index]);
                   },
                 ),
               ),

@@ -137,3 +137,102 @@ class _AddTaskFormState extends State<AddTaskForm> {
     );
   }
 }
+
+class AddHabitForm extends StatefulWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController taskController;
+  final TextEditingController deadlineController;
+
+  const AddHabitForm({
+    super.key,
+    required this.formKey,
+    required this.taskController,
+    required this.deadlineController,
+  });
+
+  @override
+  State<AddHabitForm> createState() => _AddHabitFormState();
+}
+
+class _AddHabitFormState extends State<AddHabitForm> {
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: widget.formKey,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 32.h,
+          ),
+          TitleTextWidget(
+            text: "إضافة عادة جديدة",
+            style: Styles.style24,
+          ),
+          SizedBox(
+            height: 32.h,
+          ),
+          AddTaskTextField(
+            hintText: 'العادة',
+            suffixIcon: FontAwesomeIcons.listCheck,
+            controller: widget.taskController,
+          ),
+          SizedBox(
+            height: 24.h,
+          ),
+          AddTaskTextField(
+            hintText: 'تنتهي في.',
+            controller: widget.deadlineController,
+            keyboardType: TextInputType.none,
+            onTap: () {
+              showDatePicker(
+                      context: context,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.utc(2026))
+                  .then((value) {
+                if (value == null) {
+                  widget.deadlineController.text = '';
+                } else {
+                  setState(() {
+                    widget.deadlineController.text =
+                        DateFormat.yMMMd().format(value);
+                  });
+                }
+              });
+            },
+            suffixIcon: FontAwesomeIcons.calendarCheck,
+          ),
+          SizedBox(
+            height: 24.h,
+          ),
+          const Spacer(
+            flex: 4,
+          ),
+          Row(
+            children: [
+              CustomCancelSaveButton(
+                color: Colors.white,
+                text: 'الغاء',
+                onTap: () => Navigator.pop(context),
+              ),
+              const Spacer(),
+              CustomCancelSaveButton(
+                color: Colorrs.kCyan,
+                text: 'حفظ',
+                onTap: () {
+                  if (widget.formKey.currentState!.validate()) {
+                    widget.formKey.currentState!.save();
+
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          ),
+          const Spacer(
+            flex: 1,
+          ),
+        ],
+      ),
+    );
+  }
+}

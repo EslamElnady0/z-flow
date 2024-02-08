@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:z_flow1/core/colors/colorrs.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/edit_task_screen.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
 
 class TaskItem extends StatelessWidget {
   final TaskModel taskModel;
@@ -19,7 +21,7 @@ class TaskItem extends StatelessWidget {
       child: Row(
         children: [
           Checkbox(
-            value: true,
+            value: false,
             onChanged: (value) {},
           ),
           Container(
@@ -47,43 +49,54 @@ class TaskItem extends StatelessWidget {
                     elevation: 5,
                     itemBuilder: (context) {
                       return [
-                        ...Constants.popUpMenuItems.asMap().entries.map((e) {
-                          var index = e.key;
-                          var value = e.value;
-                          return PopupMenuItem(
-                              onTap: () {
-                                if (index == 1) {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (_) => EditTaskScreen(
-                                            taskModel: taskModel,
-                                          )));
-                                }
-                                if (index == 2) {
-                                  taskModel.delete();
-                                  context.read<GetTaskCubit>().getTasks();
-                                } else {}
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    value["icon"],
-                                    color: Colorrs.kGreyDark,
-                                    size: 20.r,
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  const Spacer(),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    value["title"],
-                                    style: Styles.style16,
-                                  )
-                                ],
-                              ));
-                        })
+                        PopupMenuItem(
+                            onTap: () {
+                              taskModel.isFavourited = !taskModel.isFavourited;
+                              taskModel.save();
+                              context
+                                  .read<GetFavouriteCubit>()
+                                  .favouriteTasksList
+                                  .remove(taskModel);
+                              context
+                                  .read<GetFavouriteCubit>()
+                                  .getFavouriteTasks();
+                            },
+                            child: CustomPopUpMenuItem(
+                              taskModel: taskModel,
+                              title: "المفضلة",
+                              icon: taskModel.isFavourited
+                                  ? FontAwesomeIcons.solidStar
+                                  : FontAwesomeIcons.star,
+                            )),
+                        PopupMenuItem(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (_) => EditTaskScreen(
+                                        taskModel: taskModel,
+                                      )));
+                            },
+                            child: CustomPopUpMenuItem(
+                                taskModel: taskModel,
+                                title: "تعديل",
+                                icon: FontAwesomeIcons.penToSquare)),
+                        PopupMenuItem(
+                            onTap: () {
+                              taskModel.delete();
+                              context
+                                  .read<GetFavouriteCubit>()
+                                  .favouriteTasksList
+                                  .remove(taskModel);
+                              context.read<GetTaskCubit>().getTasks();
+
+                              context
+                                  .read<GetFavouriteCubit>()
+                                  .getFavouriteTasks();
+                            },
+                            child: CustomPopUpMenuItem(
+                              taskModel: taskModel,
+                              title: "حذف",
+                              icon: FontAwesomeIcons.trash,
+                            )),
                       ];
                     })
               ],

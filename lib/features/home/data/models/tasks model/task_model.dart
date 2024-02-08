@@ -14,6 +14,8 @@ class TaskModel extends HiveObject {
   String deadline;
   @HiveField(4)
   String sideTask;
+  @HiveField(5)
+  bool isFavourited = false;
 
   TaskModel({
     required this.sideTask,
@@ -21,5 +23,6 @@ class TaskModel extends HiveObject {
     required this.notes,
     required this.createdAt,
     required this.deadline,
+    this.isFavourited = false,
   });
 }

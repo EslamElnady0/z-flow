@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:z_flow1/features/home/presentation/screens/add_habit_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
@@ -28,7 +29,9 @@ class HabitsScreen extends StatelessWidget {
           height: 8.h,
         ),
         const Spacer(),
-        const CustomButton(
+        CustomButton(
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const AddHabitScreen())),
           text: "إضافة عادة جديدة",
         )
       ],
