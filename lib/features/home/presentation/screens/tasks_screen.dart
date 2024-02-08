@@ -17,6 +17,7 @@ class TasksScreen extends StatelessWidget {
       builder: (context, state) {
         if (context.read<GetTaskCubit>().tasksList.isEmpty) {
           return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(
                 height: 19.h,
@@ -24,7 +25,7 @@ class TasksScreen extends StatelessWidget {
 
               Icon(
                 FontAwesomeIcons.fileCircleXmark,
-                size: 60.r,
+                size: 80.r,
               ),
               Text(
                 "no Tasks",

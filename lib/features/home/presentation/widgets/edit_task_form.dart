@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
-import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/widgets/add_task_textfield.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_check_box_container.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class EditTaskForm extends StatefulWidget {
@@ -98,24 +98,9 @@ class _EditTaskFormState extends State<EditTaskForm> {
           SizedBox(
             height: 16.h,
           ),
-          Container(
-            padding: EdgeInsets.only(right: 16.w),
-            height: 55.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [Constants.shadow],
-                borderRadius: BorderRadius.circular(8.r)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "إنهاء المهمة",
-                  style: Styles.style16,
-                ),
-                Checkbox(value: false, onChanged: (value) {})
-              ],
-            ),
+          CustomCheckBoxContainer(
+            text: "إنهاء المهمة",
+            onChange: (value) {},
           ),
           SizedBox(
             height: 16.h,

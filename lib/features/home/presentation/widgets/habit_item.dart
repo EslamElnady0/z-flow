@@ -5,14 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
-import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
-import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
-import 'package:z_flow1/features/home/presentation/screens/edit_task_screen.dart';
+import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
+import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
 
-class TaskItem extends StatelessWidget {
-  final TaskModel taskModel;
-  const TaskItem({super.key, required this.taskModel});
+class HabitItem extends StatelessWidget {
+  final HabitModel habitModel;
+  const HabitItem({super.key, required this.habitModel});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class TaskItem extends StatelessWidget {
             child: Center(
                 child: Row(
               children: [
-                Text(taskModel.title, style: Styles.style16),
+                Text(habitModel.title, style: Styles.style16),
                 const Spacer(),
                 PopupMenuButton(
                     splashRadius: 0.1,
@@ -51,44 +50,45 @@ class TaskItem extends StatelessWidget {
                       return [
                         PopupMenuItem(
                             onTap: () {
-                              taskModel.isFavourited = !taskModel.isFavourited;
-                              taskModel.save();
+                              habitModel.isFavourited =
+                                  !habitModel.isFavourited;
+                              habitModel.save();
                               context
                                   .read<GetFavouriteCubit>()
-                                  .favouriteTasksList
-                                  .remove(taskModel);
+                                  .favouriteHabitsList
+                                  .remove(habitModel);
                               context
                                   .read<GetFavouriteCubit>()
-                                  .getFavouriteTasks();
+                                  .getFavouriteHabits();
                             },
                             child: CustomPopUpMenuItem(
                               title: "المفضلة",
-                              icon: taskModel.isFavourited
+                              icon: habitModel.isFavourited
                                   ? FontAwesomeIcons.solidStar
                                   : FontAwesomeIcons.star,
                             )),
                         PopupMenuItem(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => EditTaskScreen(
-                                        taskModel: taskModel,
-                                      )));
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (_) => EditTaskScreen(
+                              //           taskModel: habitModel,
+                              //         )));
                             },
                             child: const CustomPopUpMenuItem(
                                 title: "تعديل",
                                 icon: FontAwesomeIcons.penToSquare)),
                         PopupMenuItem(
                             onTap: () {
-                              taskModel.delete();
+                              habitModel.delete();
                               context
                                   .read<GetFavouriteCubit>()
-                                  .favouriteTasksList
-                                  .remove(taskModel);
-                              context.read<GetTaskCubit>().getTasks();
+                                  .favouriteHabitsList
+                                  .remove(habitModel);
+                              context.read<GetHabitCubit>().getHabits();
 
                               context
                                   .read<GetFavouriteCubit>()
-                                  .getFavouriteTasks();
+                                  .getFavouriteHabits();
                             },
                             child: const CustomPopUpMenuItem(
                               title: "حذف",

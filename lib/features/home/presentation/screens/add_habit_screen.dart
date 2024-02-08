@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:z_flow1/features/home/presentation/widgets/add_task_form.dart';
+import 'package:z_flow1/features/home/presentation/widgets/add_habit_form.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_appbar.dart';
 
 class AddHabitScreen extends StatefulWidget {
@@ -11,19 +11,19 @@ class AddHabitScreen extends StatefulWidget {
 }
 
 class _AddHabitScreenState extends State<AddHabitScreen> {
-  late TextEditingController _taskController;
+  late TextEditingController _habitController;
   late TextEditingController _deadlineController;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    _taskController = TextEditingController();
+    _habitController = TextEditingController();
     _deadlineController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _taskController.dispose();
+    _habitController.dispose();
     _deadlineController.dispose();
     super.dispose();
   }
@@ -45,7 +45,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                     hasScrollBody: false,
                     child: AddHabitForm(
                         formKey: formKey,
-                        taskController: _taskController,
+                        habitController: _habitController,
                         deadlineController: _deadlineController))
               ],
             )),

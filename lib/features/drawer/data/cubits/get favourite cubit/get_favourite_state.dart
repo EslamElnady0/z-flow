@@ -5,4 +5,6 @@ sealed class GetFavouriteState {}
 
 final class GetFavouriteInitial extends GetFavouriteState {}
 
-final class GetFavouriteSuccess extends GetFavouriteState {}
+final class GetFavouriteTasksSuccess extends GetFavouriteState {}
+
+final class GetFavouriteHabitsSuccess extends GetFavouriteState {}

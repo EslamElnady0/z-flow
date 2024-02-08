@@ -10,17 +10,20 @@ import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_scre
 import 'package:z_flow1/features/auth/presentaion/screens/password_recovery_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
+import 'package:z_flow1/features/home/data/cubit/add%20habit%20cubit/add_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/add%20task%20cubit/add_task_cubit.dart';
+import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
+import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
-
   Hive.registerAdapter(TaskModelAdapter());
+  Hive.registerAdapter(HabitModelAdapter());
   await Hive.openBox<TaskModel>(Constants.tasksBox);
-
+  await Hive.openBox<HabitModel>(Constants.habitBox);
   runApp(const ZFlowApp());
 }
 
@@ -37,7 +40,11 @@ class ZFlowApp extends StatelessWidget {
             BlocProvider(create: (context) => AddTaskCubit()),
             BlocProvider(create: (context) => GetTaskCubit()..getTasks()),
             BlocProvider(
-                create: (context) => GetFavouriteCubit()..getFavouriteTasks()),
+                create: (context) => GetFavouriteCubit()
+                  ..getFavouriteTasks()
+                  ..getFavouriteHabits()),
+            BlocProvider(create: (context) => AddHabitCubit()),
+            BlocProvider(create: (context) => GetHabitCubit()..getHabits()),
           ],
           child: MaterialApp(
             locale: const Locale("en-US"),

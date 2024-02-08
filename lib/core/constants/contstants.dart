@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:z_flow1/features/drawer/presentation/screens/favourite_habits_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/favourite_tasks_screen.dart';
 
 class Constants {
   static const String tasksBox = "tasks-box";
+  static const String habitBox = "habit-box";
   static const String favouriteTasksBox = "favourite-tasks-box";
   static List<String> bottomNavBarItems = [
     "assets/images/tasks.svg",
@@ -14,19 +16,12 @@ class Constants {
     "assets/images/account.svg",
   ];
 
-  static List<Map<String, dynamic>> popUpMenuItems = [
-    {
-      'title': "المفضلة",
-      "icon": FontAwesomeIcons.star,
-    },
-    {
-      'title': "تعديل",
-      "icon": FontAwesomeIcons.penToSquare,
-    },
-    {
-      'title': "حذف",
-      "icon": FontAwesomeIcons.trash,
-    },
+  static List<String> popUpMenuItems = [
+    "يوميا",
+    "6 ايام في الأسبوع",
+    "5 ايام في الأسبوع",
+    "4 ايام في الأسبوع",
+    "3 ايام في الأسبوع",
   ];
 
   static List<Map<String, dynamic>> drawerItems = [
@@ -74,8 +69,7 @@ class Constants {
   static const List<Widget> drawerScreens = [
     Scaffold(),
     FavouriteTasksScreen(),
-    Scaffold(),
-    Scaffold(),
+    FavouriteHabitsScrenn(),
     Scaffold(),
     Scaffold(),
     Scaffold(),

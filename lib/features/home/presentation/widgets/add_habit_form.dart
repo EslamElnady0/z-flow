@@ -5,32 +5,32 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/styles/styles.dart';
-import 'package:z_flow1/features/home/data/cubit/add%20task%20cubit/add_task_cubit.dart';
-import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
-import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
+import 'package:z_flow1/features/home/data/cubit/add%20habit%20cubit/add_habit_cubit.dart';
+import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
+import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/presentation/widgets/add_task_textfield.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_check_box_container.dart';
+import 'package:z_flow1/features/home/presentation/widgets/custom_iteration_container.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
-class AddTaskForm extends StatefulWidget {
+class AddHabitForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
-  final TextEditingController taskController;
+  final TextEditingController habitController;
   final TextEditingController deadlineController;
-  final TextEditingController notesController;
-  final TextEditingController sideTaskController;
-  const AddTaskForm(
-      {super.key,
-      required this.formKey,
-      required this.taskController,
-      required this.deadlineController,
-      required this.notesController,
-      required this.sideTaskController});
+
+  const AddHabitForm({
+    super.key,
+    required this.formKey,
+    required this.habitController,
+    required this.deadlineController,
+  });
 
   @override
-  State<AddTaskForm> createState() => _AddTaskFormState();
+  State<AddHabitForm> createState() => _AddHabitFormState();
 }
 
-class _AddTaskFormState extends State<AddTaskForm> {
+class _AddHabitFormState extends State<AddHabitForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -38,22 +38,22 @@ class _AddTaskFormState extends State<AddTaskForm> {
       child: Column(
         children: [
           SizedBox(
-            height: 24.h,
+            height: 32.h,
           ),
           TitleTextWidget(
-            text: "إضافة مهمة جديدة",
+            text: "إضافة عادة جديدة",
             style: Styles.style24,
           ),
           SizedBox(
-            height: 24.h,
+            height: 32.h,
           ),
           AddTaskTextField(
-            hintText: 'المهمة',
+            hintText: 'العادة',
             suffixIcon: FontAwesomeIcons.listCheck,
-            controller: widget.taskController,
+            controller: widget.habitController,
           ),
           SizedBox(
-            height: 16.h,
+            height: 24.h,
           ),
           AddTaskTextField(
             hintText: 'تنتهي في.',
@@ -78,25 +78,18 @@ class _AddTaskFormState extends State<AddTaskForm> {
             suffixIcon: FontAwesomeIcons.calendarCheck,
           ),
           SizedBox(
-            height: 16.h,
+            height: 24.h,
           ),
-          AddTaskTextField(
-            hintText: 'ملاحظات',
-            suffixIcon: FontAwesomeIcons.noteSticky,
-            controller: widget.notesController,
+          const CustomIterationContainer(text: "أيام العادة"),
+          SizedBox(
+            height: 24.h,
+          ),
+          CustomCheckBoxContainer(
+            text: "تذكير بهذه العادة",
+            onChange: (value) {},
           ),
           SizedBox(
-            height: 16.h,
-          ),
-          AddTaskTextField(
-              hintText: 'مهمة فرعية',
-              suffixIcon: FontAwesomeIcons.hubspot,
-              controller: widget.sideTaskController,
-              validator: (value) {
-                return null;
-              }),
-          SizedBox(
-            height: 16.h,
+            height: 24.h,
           ),
           const Spacer(
             flex: 4,
@@ -115,16 +108,16 @@ class _AddTaskFormState extends State<AddTaskForm> {
                 onTap: () {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
-                    var taskModel = TaskModel(
-                        sideTask: widget.sideTaskController.text,
-                        title: widget.taskController.text,
-                        notes: widget.notesController.text,
-                        createdAt: DateFormat.yMMMd().format(DateTime.now()),
+                    var habitModel = HabitModel(
+                        title: widget.habitController.text,
+                        createdAt: DateFormat.yMMMd().format(
+                          DateTime.now(),
+                        ),
                         deadline: widget.deadlineController.text);
-                    context.read<AddTaskCubit>().addTask(taskModel);
-                    context.read<GetTaskCubit>().getTasks();
+                    context.read<AddHabitCubit>().addHabit(habitModel);
+                    context.read<GetHabitCubit>().getHabits();
                     Navigator.pop(context);
-                  }
+                  } else {}
                 },
               ),
             ],
