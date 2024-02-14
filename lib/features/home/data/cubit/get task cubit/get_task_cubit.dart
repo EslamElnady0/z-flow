@@ -25,6 +25,16 @@ class GetTaskCubit extends Cubit<GetTaskState> {
           completedTasksList.add(allTasks[i]);
         }
       }
+      runningTasksList.sort(
+        (a, b) {
+          return a.createdAt.compareTo(b.createdAt);
+        },
+      );
+      completedTasksList.sort(
+        (a, b) {
+          return a.createdAt.compareTo(b.createdAt);
+        },
+      );
     }
     emit(GetTaskSuccess());
   }

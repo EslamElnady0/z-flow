@@ -59,7 +59,9 @@ class TasksScreen extends StatelessWidget {
         }
         ///////////////////////////////////////////////
         else {
-          return const NoEmptyTaskListsBody();
+          return NoEmptyTaskListsBody(
+            context: context,
+          );
         }
       },
     );

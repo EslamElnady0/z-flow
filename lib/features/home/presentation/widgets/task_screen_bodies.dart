@@ -49,11 +49,18 @@ class OnlyOneTaskListEmptyBody extends StatelessWidget {
   }
 }
 
-class NoEmptyTaskListsBody extends StatelessWidget {
+class NoEmptyTaskListsBody extends StatefulWidget {
+  final BuildContext context;
   const NoEmptyTaskListsBody({
     super.key,
+    required this.context,
   });
 
+  @override
+  State<NoEmptyTaskListsBody> createState() => _NoEmptyTaskListsBodyState();
+}
+
+class _NoEmptyTaskListsBodyState extends State<NoEmptyTaskListsBody> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -71,11 +78,13 @@ class NoEmptyTaskListsBody extends StatelessWidget {
         Expanded(
           flex: 2,
           child: ListView.builder(
-            itemCount: context.read<GetTaskCubit>().runningTasksList.length,
+            itemCount:
+                widget.context.read<GetTaskCubit>().runningTasksList.length,
             itemBuilder: (context, index) {
               return TaskItem(
-                  taskModel:
-                      context.read<GetTaskCubit>().runningTasksList[index]);
+                  taskModel: widget.context
+                      .read<GetTaskCubit>()
+                      .runningTasksList[index]);
             },
           ),
         ),
@@ -92,11 +101,13 @@ class NoEmptyTaskListsBody extends StatelessWidget {
         Expanded(
           flex: 1,
           child: ListView.builder(
-            itemCount: context.read<GetTaskCubit>().completedTasksList.length,
+            itemCount:
+                widget.context.read<GetTaskCubit>().completedTasksList.length,
             itemBuilder: (context, index) {
               return TaskItem(
-                  taskModel:
-                      context.read<GetTaskCubit>().completedTasksList[index]);
+                  taskModel: widget.context
+                      .read<GetTaskCubit>()
+                      .completedTasksList[index]);
             },
           ),
         ),

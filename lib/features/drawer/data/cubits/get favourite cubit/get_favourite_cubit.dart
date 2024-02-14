@@ -24,6 +24,11 @@ class GetFavouriteCubit extends Cubit<GetFavouriteState> {
         }
       }
     }
+    favouriteTasksList.sort(
+      (a, b) {
+        return a.createdAt.compareTo(b.createdAt);
+      },
+    );
     emit(GetFavouriteTasksSuccess());
   }
 
@@ -38,6 +43,11 @@ class GetFavouriteCubit extends Cubit<GetFavouriteState> {
         }
       }
     }
+    favouriteHabitsList.sort(
+      (a, b) {
+        return a.createdAt.compareTo(b.createdAt);
+      },
+    );
     emit(GetFavouriteHabitsSuccess());
   }
 }
