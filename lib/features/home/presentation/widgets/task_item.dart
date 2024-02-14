@@ -21,20 +21,27 @@ class TaskItem extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 16.h),
       child: Row(
         children: [
-          CustomCheckBox(
-            value: taskModel.isDone,
-            onChanged: (value) {
-              taskModel.isDone = !(taskModel.isDone);
-              taskModel.save();
-              if (taskModel.isDone) {
-                context.read<GetTaskCubit>().runningTasksList.remove(taskModel);
-              } else {
-                context
-                    .read<GetTaskCubit>()
-                    .completedTasksList
-                    .remove(taskModel);
-              }
-              context.read<GetTaskCubit>().getTasks();
+          BlocBuilder<GetTaskCubit, GetTaskState>(
+            builder: (context, state) {
+              return CustomCheckBox(
+                value: taskModel.isDone,
+                onChanged: (value) {
+                  taskModel.isDone = !(taskModel.isDone);
+                  taskModel.save();
+                  if (taskModel.isDone) {
+                    context
+                        .read<GetTaskCubit>()
+                        .runningTasksList
+                        .remove(taskModel);
+                  } else {
+                    context
+                        .read<GetTaskCubit>()
+                        .completedTasksList
+                        .remove(taskModel);
+                  }
+                  context.read<GetTaskCubit>().getTasks();
+                },
+              );
             },
           ),
           Container(
