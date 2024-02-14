@@ -9,13 +9,23 @@ part 'get_task_state.dart';
 class GetTaskCubit extends Cubit<GetTaskState> {
   GetTaskCubit() : super(GetTaskInitial());
 
-  List<TaskModel> tasksList = [];
-  List<TaskModel> favouriteTasksList = [];
+  List<TaskModel> runningTasksList = [];
+  List<TaskModel> completedTasksList = [];
 
   getTasks() {
     var tasksBox = Hive.box<TaskModel>(Constants.tasksBox);
-
-    tasksList = tasksBox.values.toList();
+    List<TaskModel> allTasks = tasksBox.values.toList();
+    for (var i = 0; i < allTasks.length; i++) {
+      if (!allTasks[i].isDone) {
+        if (!runningTasksList.contains(allTasks[i])) {
+          runningTasksList.add(allTasks[i]);
+        }
+      } else {
+        if (!completedTasksList.contains(allTasks[i])) {
+          completedTasksList.add(allTasks[i]);
+        }
+      }
+    }
     emit(GetTaskSuccess());
   }
 }
