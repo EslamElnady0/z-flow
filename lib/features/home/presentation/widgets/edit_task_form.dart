@@ -98,9 +98,29 @@ class _EditTaskFormState extends State<EditTaskForm> {
           SizedBox(
             height: 16.h,
           ),
-          CustomCheckBoxContainer(
-            text: "إنهاء المهمة",
-            onChange: (value) {},
+          BlocBuilder<GetTaskCubit, GetTaskState>(
+            builder: (context, state) {
+              return CustomCheckBoxContainer(
+                value: widget.taskModel.isDone,
+                text: "إنهاء المهمة",
+                onChange: (value) {
+                  widget.taskModel.isDone = !(widget.taskModel.isDone);
+                  widget.taskModel.save();
+                  if (widget.taskModel.isDone) {
+                    context
+                        .read<GetTaskCubit>()
+                        .runningTasksList
+                        .remove(widget.taskModel);
+                  } else {
+                    context
+                        .read<GetTaskCubit>()
+                        .completedTasksList
+                        .remove(widget.taskModel);
+                  }
+                  context.read<GetTaskCubit>().getTasks();
+                },
+              );
+            },
           ),
           SizedBox(
             height: 16.h,

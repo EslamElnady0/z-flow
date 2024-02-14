@@ -86,6 +86,7 @@ class _EditHabitFormState extends State<EditHabitForm> {
             height: 24.h,
           ),
           CustomCheckBoxContainer(
+            value: false,
             text: "تذكير بهذه العادة",
             onChange: (value) {},
           ),

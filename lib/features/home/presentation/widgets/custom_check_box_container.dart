@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
 
+// ignore: must_be_immutable
 class CustomCheckBoxContainer extends StatelessWidget {
   final String text;
   final void Function(bool?)? onChange;
+  final bool value;
   const CustomCheckBoxContainer({
     super.key,
     required this.text,
     this.onChange,
+    required this.value,
   });
 
   @override
@@ -29,7 +33,10 @@ class CustomCheckBoxContainer extends StatelessWidget {
             text,
             style: Styles.style16,
           ),
-          Checkbox(value: false, onChanged: onChange)
+          CustomCheckBox(
+            value: value,
+            onChanged: onChange,
+          )
         ],
       ),
     );

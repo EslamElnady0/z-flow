@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
@@ -10,6 +9,7 @@ import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cub
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/edit_task_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
+import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
 
 class TaskItem extends StatelessWidget {
   final TaskModel taskModel;
@@ -21,18 +21,7 @@ class TaskItem extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 16.h),
       child: Row(
         children: [
-          Checkbox(
-            checkColor: Colorrs.kCyan,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6.r)),
-            side: MaterialStateBorderSide.resolveWith((states) {
-              if (states.contains(MaterialState.selected)) {
-                return const BorderSide(color: Colorrs.kWhite);
-              } else {
-                return const BorderSide(color: Colorrs.kGreyDark);
-              }
-            }),
-            fillColor: const MaterialStatePropertyAll(Colors.transparent),
+          CustomCheckBox(
             value: taskModel.isDone,
             onChanged: (value) {
               taskModel.isDone = !(taskModel.isDone);
@@ -113,10 +102,12 @@ class TaskItem extends StatelessWidget {
                                   .read<GetTaskCubit>()
                                   .completedTasksList
                                   .remove(taskModel);
+
                               context
                                   .read<GetTaskCubit>()
                                   .runningTasksList
                                   .remove(taskModel);
+
                               context.read<GetTaskCubit>().getTasks();
                               context
                                   .read<GetFavouriteCubit>()
