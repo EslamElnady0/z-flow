@@ -5,11 +5,13 @@ import 'package:z_flow1/core/colors/colorrs.dart';
 // ignore: must_be_immutable
 class CustomCheckBox extends StatelessWidget {
   final bool value;
+  final Color? selectedBorderColor;
   final void Function(bool?)? onChanged;
   const CustomCheckBox({
     super.key,
     required this.value,
     this.onChanged,
+    this.selectedBorderColor,
   });
 
   @override
@@ -19,7 +21,7 @@ class CustomCheckBox extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.r)),
       side: MaterialStateBorderSide.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
-          return const BorderSide(color: Colorrs.kWhite);
+          return BorderSide(color: selectedBorderColor ?? Colorrs.kWhite);
         } else {
           return const BorderSide(color: Colorrs.kGreyDark);
         }
