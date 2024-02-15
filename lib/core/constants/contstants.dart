@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/favourite_habits_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/favourite_tasks_screen.dart';
+import 'package:z_flow1/features/drawer/presentation/screens/work_session_screen.dart';
 
 class Constants {
   static const String tasksBox = "tasks-box";
@@ -67,7 +68,7 @@ class Constants {
     },
   ];
   static const List<Widget> drawerScreens = [
-    Scaffold(),
+    WorkSessionScreen(),
     FavouriteTasksScreen(),
     FavouriteHabitsScrenn(),
     Scaffold(),

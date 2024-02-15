@@ -49,9 +49,16 @@ class Styles {
   );
   static TextStyle style32 = TextStyle(
     color: Colorrs.kGreyDark,
-    fontSize: 24.sp,
+    fontSize: 32.sp,
     fontFamily: 'Cairo',
     fontWeight: FontWeight.w400,
+    height: 0,
+  );
+  static TextStyle style40 = TextStyle(
+    color: Colorrs.kGreyDark,
+    fontSize: 40.sp,
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.w500,
     height: 0,
   );
 }
