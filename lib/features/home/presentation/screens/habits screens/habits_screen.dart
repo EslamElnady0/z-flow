@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
-import 'package:z_flow1/features/home/presentation/screens/add_habit_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/habits%20screens/add_habit_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/habit_item.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';

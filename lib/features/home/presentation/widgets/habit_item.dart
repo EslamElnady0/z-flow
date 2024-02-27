@@ -7,7 +7,7 @@ import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
-import 'package:z_flow1/features/home/presentation/screens/edit_habit_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/habits%20screens/edit_habit_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
 
 class HabitItem extends StatelessWidget {

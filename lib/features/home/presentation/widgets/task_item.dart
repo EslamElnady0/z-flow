@@ -7,7 +7,7 @@ import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
-import 'package:z_flow1/features/home/presentation/screens/edit_task_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/tasks%20screens/edit_task_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
 import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
 

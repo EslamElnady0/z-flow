@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
-import 'package:z_flow1/features/home/presentation/screens/add_task_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/tasks%20screens/add_task_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/task_screen_bodies.dart';
 
