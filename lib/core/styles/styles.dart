@@ -26,6 +26,13 @@ class Styles {
     fontWeight: FontWeight.w400,
     height: 0,
   );
+  static TextStyle style16Modified = TextStyle(
+    color: Colorrs.kGreyDark,
+    fontSize: 16.sp,
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.w400,
+    height: 0.5,
+  );
   static TextStyle style16Bold = TextStyle(
     color: Colorrs.kGreyDark,
     fontSize: 16.sp,

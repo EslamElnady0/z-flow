@@ -3,19 +3,19 @@ import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/core/util/context_helpers.dart';
 
-class MotivationScreen extends StatefulWidget {
+class MotivationSplashScreen extends StatefulWidget {
   static String pageName = 'motivateScreen';
-  const MotivationScreen({Key? key}) : super(key: key);
+  const MotivationSplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<MotivationScreen> createState() => _MotivationScreenState();
+  State<MotivationSplashScreen> createState() => _MotivationSplashScreenState();
 }
 
-class _MotivationScreenState extends State<MotivationScreen> {
+class _MotivationSplashScreenState extends State<MotivationSplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 3)).then((_) {
-      Navigator.pushReplacementNamed(context, HomePage.pageName);
+      Navigator.pushReplacementNamed(context, HomeScreen.pageName);
     });
     super.initState();
   }

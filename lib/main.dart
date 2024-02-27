@@ -55,11 +55,12 @@ class ZFlowApp extends StatelessWidget {
               SignUpScreen.pageName: (context) => const SignUpScreen(),
               PasswordRecoveryScreen.pageName: (context) =>
                   const PasswordRecoveryScreen(),
-              MotivationScreen.pageName: (context) => const MotivationScreen(),
-              HomePage.pageName: (context) => const HomePage(),
+              MotivationSplashScreen.pageName: (context) =>
+                  const MotivationSplashScreen(),
+              HomeScreen.pageName: (context) => const HomeScreen(),
             },
             debugShowCheckedModeBanner: false,
-            home: const HomePage(),
+            home: const HomeScreen(),
           ),
         );
       }),

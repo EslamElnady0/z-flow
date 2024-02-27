@@ -59,7 +59,7 @@ class AuthScreen extends StatelessWidget {
               padding: const EdgeInsets.only(right: 10, bottom: 16),
               child: AuthBottomButtonForward(
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, HomePage.pageName);
+                  Navigator.pushReplacementNamed(context, HomeScreen.pageName);
                 },
                 title: 'Skip',
                 icon: Icons.keyboard_double_arrow_right_outlined,

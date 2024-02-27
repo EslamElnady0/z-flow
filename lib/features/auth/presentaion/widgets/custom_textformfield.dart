@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 
+// ignore: must_be_immutable
 class CustomTextFormField extends StatefulWidget {
   final String hint;
-  IconData? suffixIcon;
+  final IconData? suffixIcon;
   final IconData prefixIcon;
-  VoidCallback? onTap;
+  final VoidCallback? onTap;
   final bool isPassword;
   final TextInputType? keyboardType;
-  String? Function(String?)? validate;
+  final String? Function(String?)? validate;
   AutovalidateMode? autoValidateMode = AutovalidateMode.disabled;
 
   CustomTextFormField({

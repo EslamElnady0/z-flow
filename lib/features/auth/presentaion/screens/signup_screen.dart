@@ -143,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onTap: () {
                             if (formKey.currentState!.validate()) {
                               Navigator.pushReplacementNamed(
-                                  context, MotivationScreen.pageName);
+                                  context, MotivationSplashScreen.pageName);
                             } else {
                               autoValidateMode = AutovalidateMode.always;
                               setState(() {});

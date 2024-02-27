@@ -18,7 +18,7 @@ class AuthFooter extends StatelessWidget {
       const Spacer(),
       AuthBottomButtonForward(
           onTap: () {
-            Navigator.pushReplacementNamed(context, HomePage.pageName);
+            Navigator.pushReplacementNamed(context, HomeScreen.pageName);
           },
           title: "Skip",
           icon: Icons.keyboard_double_arrow_right_outlined),

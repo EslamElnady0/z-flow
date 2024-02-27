@@ -98,8 +98,8 @@ class _LogInScreenState extends State<LogInScreen> {
                                 title: "Log in",
                                 onTap: () {
                                   if (formKey.currentState!.validate()) {
-                                    Navigator.pushReplacementNamed(
-                                        context, MotivationScreen.pageName);
+                                    Navigator.pushReplacementNamed(context,
+                                        MotivationSplashScreen.pageName);
                                   } else {
                                     autoValidateMode = AutovalidateMode.always;
                                     setState(() {});
