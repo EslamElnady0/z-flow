@@ -33,14 +33,10 @@ class EntertainmentScreen extends StatelessWidget {
             const CustomWhiteContainer(
                 text:
                     "الخروج مع الأصدقاء وقضاء الوقت معهم والقيام بأنشطة مشتركة"),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Image.asset(
-                "assets/images/entertainment cheering.png",
-                height: 332.h,
-                width: 332.w,
-                fit: BoxFit.cover,
-              ),
+            Image.asset(
+              "assets/images/entertainment cheering.png",
+              height: 332.h,
+              width: 332.w,
             ),
             const Spacer(),
             const CustomCancelSaveButton(color: Colorrs.kCyan, text: "أخري"),

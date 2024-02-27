@@ -14,6 +14,7 @@ class CustomWhiteContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       height: 95.h,
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -22,14 +23,10 @@ class CustomWhiteContainer extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(8.r),
           boxShadow: [Constants.shadow]),
-      child: Center(
-        child: Flexible(
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: style ?? const TextStyle(fontFamily: "Cairo"),
-          ),
-        ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: style ?? const TextStyle(fontFamily: "Cairo"),
       ),
     );
   }
