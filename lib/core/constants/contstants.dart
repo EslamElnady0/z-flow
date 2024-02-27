@@ -6,12 +6,13 @@ import 'package:z_flow1/features/drawer/presentation/screens/entertainment_scree
 import 'package:z_flow1/features/drawer/presentation/screens/favourite_habits_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/favourite_tasks_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/motivation_screen.dart';
+import 'package:z_flow1/features/drawer/presentation/screens/target%20screen/target_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/work_session_screen.dart';
 
 class Constants {
   static const String tasksBox = "tasks-box";
   static const String habitBox = "habit-box";
-  static const String favouriteTasksBox = "favourite-tasks-box";
+  static const String targetBox = "target-box";
   static List<String> bottomNavBarItems = [
     "assets/images/tasks.svg",
     "assets/images/date.svg",
@@ -79,7 +80,7 @@ class Constants {
     AdvicesScreen(),
     MotivationScreen(),
     EntertainmentScreen(),
-    Scaffold(),
+    TargetScreen(),
     Scaffold(),
     Scaffold(),
     Scaffold(),

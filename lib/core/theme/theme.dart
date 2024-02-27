@@ -6,7 +6,7 @@ import 'package:z_flow1/core/constants/decorated_input_border.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
-      fontFamily: "Inter",
+      fontFamily: "Cairo",
       inputDecorationTheme: InputDecorationTheme(
           border: DecoratedInputBorder(
               child: OutlineInputBorder(
