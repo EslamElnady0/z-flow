@@ -19,7 +19,7 @@ class WorkSessionBreakBody extends StatefulWidget {
 class _WorkSessionBreakBodyState extends State<WorkSessionBreakBody> {
   late Timer timer;
   startBreakTimer() {
-    timer = Timer.periodic(const Duration(milliseconds: 25), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (context.read<TimerCubit>().breakCounter >= 0) {
         context.read<TimerCubit>().duration =
             Duration(seconds: context.read<TimerCubit>().breakCounter);
@@ -102,6 +102,7 @@ class _WorkSessionBreakBodyState extends State<WorkSessionBreakBody> {
                     context.read<TimerCubit>().updateTimer();
                   } else {
                     startBreakTimer();
+                    context.read<TimerCubit>().updateTimer();
                   }
                 },
                 child: Container(

@@ -21,7 +21,7 @@ class WorkSessionWorkingBody extends StatefulWidget {
 class _WorkSessionWorkingBodyState extends State<WorkSessionWorkingBody> {
   late Timer timer;
   void startWorkingTimer() {
-    timer = Timer.periodic(const Duration(milliseconds: 25), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (context.read<TimerCubit>().workingCounter >= 0) {
         context.read<TimerCubit>().duration =
             Duration(seconds: context.read<TimerCubit>().workingCounter);
@@ -104,6 +104,7 @@ class _WorkSessionWorkingBodyState extends State<WorkSessionWorkingBody> {
                     context.read<TimerCubit>().updateTimer();
                   } else {
                     startWorkingTimer();
+                    context.read<TimerCubit>().updateTimer();
                   }
                 },
                 child: Container(
