@@ -81,15 +81,27 @@ class _EditHabitFormState extends State<EditHabitForm> {
           SizedBox(
             height: 24.h,
           ),
-          const CustomIterationContainer(text: "أيام العادة"),
-          SizedBox(
-            height: 24.h,
-          ),
-          CustomCheckBoxContainer(
-            value: false,
-            text: "تذكير بهذه العادة",
-            onChange: (value) {},
-          ),
+          BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
+            return Column(
+              children: [
+                CustomIterationContainer(
+                  habitModel: widget.habitModel,
+                ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                CustomCheckBoxContainer(
+                  value: widget.habitModel.isIterable,
+                  text: "تذكير بهذه العادة",
+                  onChange: (value) {
+                    widget.habitModel.isIterable =
+                        !(widget.habitModel.isIterable);
+                    context.read<GetHabitCubit>().getHabits();
+                  },
+                ),
+              ],
+            );
+          }),
           SizedBox(
             height: 24.h,
           ),

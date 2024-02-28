@@ -6,3 +6,5 @@ sealed class GetHabitState {}
 final class GetHabitInitial extends GetHabitState {}
 
 final class GetHabitSuccess extends GetHabitState {}
+
+final class UpdateIteration extends GetHabitState {}

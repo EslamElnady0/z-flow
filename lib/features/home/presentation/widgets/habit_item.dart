@@ -9,6 +9,7 @@ import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_c
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/habits%20screens/edit_habit_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
+import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
 
 class HabitItem extends StatelessWidget {
   final HabitModel habitModel;
@@ -20,10 +21,16 @@ class HabitItem extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 16.h),
       child: Row(
         children: [
-          Checkbox(
-            value: false,
-            onChanged: (value) {},
-          ),
+          BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
+            return CustomCheckBox(
+              value: habitModel.isIterable,
+              onChanged: (value) {
+                habitModel.isIterable = !(habitModel.isIterable);
+                habitModel.save();
+                context.read<GetHabitCubit>().getHabits();
+              },
+            );
+          }),
           Container(
             padding: EdgeInsets.only(right: 8.w),
             width: 291.w,

@@ -11,15 +11,18 @@ class HabitModel extends HiveObject {
   @HiveField(2)
   final String createdAt;
   @HiveField(3)
-  int iteration = 7;
+  int iteration;
   @HiveField(4)
   bool isFavourited = false;
+  @HiveField(5)
+  bool isIterable = false;
 
   HabitModel({
-    this.iteration = 7,
-    required this.title,
-    required this.createdAt,
-    required this.deadline,
+    this.iteration = 3,
+    this.title = '',
+    this.createdAt = '',
+    this.deadline = '',
     this.isFavourited = false,
+    this.isIterable = false,
   });
 }

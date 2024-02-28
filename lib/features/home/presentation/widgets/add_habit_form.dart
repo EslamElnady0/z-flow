@@ -31,6 +31,14 @@ class AddHabitForm extends StatefulWidget {
 }
 
 class _AddHabitFormState extends State<AddHabitForm> {
+  bool isIterable = false;
+  late HabitModel habitModel;
+  @override
+  void initState() {
+    habitModel = HabitModel();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -80,15 +88,26 @@ class _AddHabitFormState extends State<AddHabitForm> {
           SizedBox(
             height: 24.h,
           ),
-          const CustomIterationContainer(text: "أيام العادة"),
-          SizedBox(
-            height: 24.h,
-          ),
-          CustomCheckBoxContainer(
-            value: false,
-            text: "تذكير بهذه العادة",
-            onChange: (value) {},
-          ),
+          BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
+            return Column(
+              children: [
+                CustomIterationContainer(
+                  habitModel: habitModel,
+                ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                CustomCheckBoxContainer(
+                  value: isIterable,
+                  text: "تذكير بهذه العادة",
+                  onChange: (value) {
+                    isIterable = !isIterable;
+                    setState(() {});
+                  },
+                ),
+              ],
+            );
+          }),
           SizedBox(
             height: 24.h,
           ),
@@ -109,11 +128,13 @@ class _AddHabitFormState extends State<AddHabitForm> {
                 onTap: () {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
-                    var habitModel = HabitModel(
+                    habitModel = HabitModel(
                         title: widget.habitController.text,
+                        isIterable: isIterable,
                         createdAt: DateFormat.yMMMd().format(
                           DateTime.now(),
                         ),
+                        iteration: context.read<GetHabitCubit>().iteration,
                         deadline: widget.deadlineController.text);
                     context.read<AddHabitCubit>().addHabit(habitModel);
                     context.read<GetHabitCubit>().getHabits();

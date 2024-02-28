@@ -22,13 +22,14 @@ class HabitModelAdapter extends TypeAdapter<HabitModel> {
       createdAt: fields[2] as String,
       deadline: fields[1] as String,
       isFavourited: fields[4] as bool,
+      isIterable: fields[5] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, HabitModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class HabitModelAdapter extends TypeAdapter<HabitModel> {
       ..writeByte(3)
       ..write(obj.iteration)
       ..writeByte(4)
-      ..write(obj.isFavourited);
+      ..write(obj.isFavourited)
+      ..writeByte(5)
+      ..write(obj.isIterable);
   }
 
   @override

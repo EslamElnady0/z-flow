@@ -122,3 +122,16 @@ class Constants {
     borderRadius: BorderRadius.circular(8.r),
   );
 }
+
+enum Iteration {
+  dayly("يوميا", 7),
+  sixTimes("6 ايام في الأسبوع", 6),
+  fiveTimes("5 ايام في الأسبوع", 5),
+  fourTimes("4 ايام في الأسبوع", 4),
+  threeTimes("3 ايام في الأسبوع", 3),
+  zeroTimes("أيام العادة", 0);
+
+  final String name;
+  final int value;
+  const Iteration(this.name, this.value);
+}

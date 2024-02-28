@@ -1,11 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
+import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 
-class CustomIterationContainer extends StatelessWidget {
-  final String text;
-  const CustomIterationContainer({super.key, required this.text});
+// ignore: must_be_immutable
+class CustomIterationContainer extends StatefulWidget {
+  final HabitModel habitModel;
+  const CustomIterationContainer({super.key, required this.habitModel});
+
+  @override
+  State<CustomIterationContainer> createState() =>
+      _CustomIterationContainerState();
+}
+
+class _CustomIterationContainerState extends State<CustomIterationContainer> {
+  String textChoice() {
+    switch (widget.habitModel.iteration) {
+      case 7:
+        return Iteration.dayly.name;
+      case 6:
+        return Iteration.sixTimes.name;
+
+      case 5:
+        return Iteration.fiveTimes.name;
+
+      case 4:
+        return Iteration.fourTimes.name;
+
+      case 3:
+        return Iteration.threeTimes.name;
+
+      default:
+        return Iteration.zeroTimes.name;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +52,7 @@ class CustomIterationContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            text,
+            textChoice(),
             style: Styles.style16,
           ),
           Row(
@@ -33,19 +64,25 @@ class CustomIterationContainer extends StatelessWidget {
                   itemBuilder: (context) {
                     return [
                       ...Constants.popUpMenuItems.asMap().entries.map((e) {
-                        //var index = e.key;
+                        var index = e.key;
                         var value = e.value;
                         return PopupMenuItem(
+                            onTap: () {
+                              context
+                                  .read<GetHabitCubit>()
+                                  .updateIterationContainer(
+                                      index, widget.habitModel);
+                            },
                             child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                value,
-                                style: Styles.style16,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    value,
+                                    style: Styles.style16,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ));
+                            ));
                       })
                     ];
                   })
