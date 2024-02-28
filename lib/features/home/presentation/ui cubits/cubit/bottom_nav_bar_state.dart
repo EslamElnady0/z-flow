@@ -6,5 +6,3 @@ sealed class BottomNavBarState {}
 final class BottomNavBarInitial extends BottomNavBarState {}
 
 final class BottomNavBarChanged extends BottomNavBarState {}
-
-final class DayChangedState extends BottomNavBarState {}

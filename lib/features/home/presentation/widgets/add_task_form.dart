@@ -122,6 +122,10 @@ class _AddTaskFormState extends State<AddTaskForm> {
                         createdAt: DateFormat.yMMMd().format(DateTime.now()),
                         deadline: widget.deadlineController.text);
                     context.read<AddTaskCubit>().addTask(taskModel);
+                    context
+                        .read<GetTaskCubit>()
+                        .getSpecificDayTasks(DateTime.now());
+
                     context.read<GetTaskCubit>().getTasks();
                     Navigator.pop(context);
                   }

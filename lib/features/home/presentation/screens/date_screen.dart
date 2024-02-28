@@ -6,7 +6,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
-import 'package:z_flow1/features/home/presentation/ui%20cubits/cubit/bottom_nav_bar_cubit.dart';
+import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
+import 'package:z_flow1/features/home/presentation/widgets/task_item.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class DateScreen extends StatelessWidget {
@@ -32,7 +33,7 @@ class DateScreen extends StatelessWidget {
             width: 262.w,
             height: 191.h,
           ),
-          BlocBuilder<BottomNavBarCubit, BottomNavBarState>(
+          BlocBuilder<GetTaskCubit, GetTaskState>(
             builder: (context, state) {
               return Container(
                 height: 234.h,
@@ -43,11 +44,10 @@ class DateScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24.r),
                     boxShadow: [Constants.shadow]),
                 child: TableCalendar(
-                  onDaySelected:
-                      context.read<BottomNavBarCubit>().onDaySelected,
+                  onDaySelected: context.read<GetTaskCubit>().onDaySelected,
                   rowHeight: 29.h,
                   selectedDayPredicate: (day) =>
-                      isSameDay(day, context.read<BottomNavBarCubit>().today),
+                      isSameDay(day, context.read<GetTaskCubit>().today),
                   availableGestures: AvailableGestures.all,
                   daysOfWeekStyle: DaysOfWeekStyle(
                       weekdayStyle: Styles.style10,
@@ -76,7 +76,7 @@ class DateScreen extends StatelessWidget {
                       titleCentered: true,
                       formatButtonVisible: false,
                       titleTextStyle: Styles.style16),
-                  focusedDay: context.read<BottomNavBarCubit>().today,
+                  focusedDay: context.read<GetTaskCubit>().today,
                   firstDay: DateTime.utc(2012, 1, 1),
                   lastDay: DateTime.utc(2036, 12, 31),
                 ),
@@ -90,6 +90,23 @@ class DateScreen extends StatelessWidget {
             text: "مهامك في ذلك اليوم",
             style: Styles.style10,
           ),
+          SizedBox(
+            height: 10.h,
+          ),
+          BlocBuilder<GetTaskCubit, GetTaskState>(builder: (context, state) {
+            return SizedBox(
+              height: 300.h,
+              child: ListView.builder(
+                  itemCount:
+                      context.read<GetTaskCubit>().specificDayTasks.length,
+                  itemBuilder: (context, index) {
+                    return TaskItem(
+                        taskModel: context
+                            .read<GetTaskCubit>()
+                            .specificDayTasks[index]);
+                  }),
+            );
+          }),
           SizedBox(
             height: 24.h,
           ),
