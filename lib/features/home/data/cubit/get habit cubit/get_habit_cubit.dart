@@ -10,7 +10,7 @@ class GetHabitCubit extends Cubit<GetHabitState> {
   GetHabitCubit() : super(GetHabitInitial());
 
   List<HabitModel> habitList = [];
-  int iteration = 0;
+  int iteration = 3;
 
   getHabits() {
     var habitBox = Hive.box<HabitModel>(Constants.habitBox);
