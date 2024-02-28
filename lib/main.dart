@@ -46,7 +46,9 @@ class ZFlowApp extends StatelessWidget {
             BlocProvider(
                 create: (context) => GetTaskCubit()
                   ..getTasks()
-                  ..getSpecificDayTasks(DateTime.now())),
+                  ..getSpecificDayTasks(
+                    DateTime.now(),
+                  )),
             BlocProvider(
                 create: (context) => GetFavouriteCubit()
                   ..getFavouriteTasks()

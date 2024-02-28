@@ -10,8 +10,9 @@ part 'get_task_state.dart';
 class GetTaskCubit extends Cubit<GetTaskState> {
   GetTaskCubit() : super(GetTaskInitial());
   DateTime today = DateTime.now();
+  DateTime focusedDay = DateTime.now();
 
-  List<TaskModel> specificDayTasks = [];
+  List<TaskModel> specificDayTasksList = [];
   List<TaskModel> runningTasksList = [];
   List<TaskModel> completedTasksList = [];
 
@@ -42,22 +43,26 @@ class GetTaskCubit extends Cubit<GetTaskState> {
     emit(GetTaskSuccess());
   }
 
-  getSpecificDayTasks(DateTime day) {
+  getSpecificDayTasks(
+    DateTime day,
+  ) {
     var tasksBox = Hive.box<TaskModel>(Constants.tasksBox);
     List<TaskModel> allTasks = tasksBox.values.toList();
     for (var task in allTasks) {
       if (task.createdAt == DateFormat.yMMMd().format(day)) {
-        if (!specificDayTasks.contains(task)) {
-          specificDayTasks.add(task);
+        if (!specificDayTasksList.contains(task)) {
+          specificDayTasksList.add(task);
         }
       }
     }
     emit(GetTaskSuccess());
+    //  return list;
   }
 
   onDaySelected(DateTime day, DateTime focusDay) {
     today = day;
-    specificDayTasks = [];
+    // focusedDay = focusDay;
+    specificDayTasksList = [];
     getSpecificDayTasks(focusDay);
     emit(DayChangedState());
   }

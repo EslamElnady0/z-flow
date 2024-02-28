@@ -55,6 +55,12 @@ class DateScreen extends StatelessWidget {
                   calendarStyle: CalendarStyle(
                       selectedTextStyle:
                           Styles.style10.copyWith(color: Colorrs.kWhite),
+                      defaultDecoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      weekendDecoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
                       selectedDecoration: const BoxDecoration(
                           color: Colorrs.kCyan, shape: BoxShape.circle),
                       tablePadding: EdgeInsets.zero,
@@ -98,12 +104,12 @@ class DateScreen extends StatelessWidget {
               height: 300.h,
               child: ListView.builder(
                   itemCount:
-                      context.read<GetTaskCubit>().specificDayTasks.length,
+                      context.read<GetTaskCubit>().specificDayTasksList.length,
                   itemBuilder: (context, index) {
                     return TaskItem(
                         taskModel: context
                             .read<GetTaskCubit>()
-                            .specificDayTasks[index]);
+                            .specificDayTasksList[index]);
                   }),
             );
           }),
