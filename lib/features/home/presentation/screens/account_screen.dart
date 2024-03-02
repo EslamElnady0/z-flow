@@ -35,8 +35,8 @@ class AccountScreen extends StatelessWidget {
               title: "العادات",
               complete: "العادات المكتملة",
               running: "العادات العالقة",
-              runningList: context.read<GetHabitCubit>().habitList,
-              completedList: context.read<GetHabitCubit>().habitList),
+              runningList: context.read<GetHabitCubit>().runningHabitsList,
+              completedList: context.read<GetHabitCubit>().completedHabitsList),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(

@@ -23,10 +23,21 @@ class HabitItem extends StatelessWidget {
         children: [
           BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
             return CustomCheckBox(
-              value: habitModel.isIterable,
+              value: habitModel.isDone,
               onChanged: (value) {
-                habitModel.isIterable = !(habitModel.isIterable);
+                habitModel.isDone = !(habitModel.isDone);
                 habitModel.save();
+                if (habitModel.isDone) {
+                  context
+                      .read<GetHabitCubit>()
+                      .runningHabitsList
+                      .remove(habitModel);
+                } else {
+                  context
+                      .read<GetHabitCubit>()
+                      .completedHabitsList
+                      .remove(habitModel);
+                }
                 context.read<GetHabitCubit>().getHabits();
               },
             );
@@ -92,6 +103,14 @@ class HabitItem extends StatelessWidget {
                               context
                                   .read<GetFavouriteCubit>()
                                   .favouriteHabitsList
+                                  .remove(habitModel);
+                              context
+                                  .read<GetHabitCubit>()
+                                  .runningHabitsList
+                                  .remove(habitModel);
+                              context
+                                  .read<GetHabitCubit>()
+                                  .completedHabitsList
                                   .remove(habitModel);
                               context.read<GetHabitCubit>().getHabits();
 

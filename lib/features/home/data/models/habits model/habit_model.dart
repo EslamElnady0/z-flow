@@ -16,6 +16,8 @@ class HabitModel extends HiveObject {
   bool isFavourited = false;
   @HiveField(5)
   bool isIterable = false;
+  @HiveField(6)
+  bool isDone = false;
 
   HabitModel({
     this.iteration = 3,
@@ -24,5 +26,6 @@ class HabitModel extends HiveObject {
     this.deadline = '',
     this.isFavourited = false,
     this.isIterable = false,
+    this.isDone = false,
   });
 }

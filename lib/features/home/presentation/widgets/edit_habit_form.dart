@@ -99,6 +99,29 @@ class _EditHabitFormState extends State<EditHabitForm> {
                     context.read<GetHabitCubit>().getHabits();
                   },
                 ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                CustomCheckBoxContainer(
+                  value: widget.habitModel.isDone,
+                  text: "اتمام العادة لليوم",
+                  onChange: (value) {
+                    widget.habitModel.isDone = !(widget.habitModel.isDone);
+                    widget.habitModel.save();
+                    if (widget.habitModel.isDone) {
+                      context
+                          .read<GetHabitCubit>()
+                          .runningHabitsList
+                          .remove(widget.habitModel);
+                    } else {
+                      context
+                          .read<GetHabitCubit>()
+                          .completedHabitsList
+                          .remove(widget.habitModel);
+                    }
+                    context.read<GetHabitCubit>().getHabits();
+                  },
+                ),
               ],
             );
           }),

@@ -77,11 +77,13 @@ class CustomStatsItem extends StatelessWidget {
                       CircularProgressIndicator(
                           color: Colorrs.kCyan,
                           strokeWidth: 7,
-                          value: completedList.length /
-                              (completedList.length + runningList.length)),
+                          value: completedList.isEmpty
+                              ? 0
+                              : completedList.length /
+                                  (completedList.length + runningList.length)),
                       Center(
                           child: Text(
-                        '${(completedList.length * 100 / (completedList.length + runningList.length)).round()}%',
+                        '${completedList.isEmpty ? "0" : (completedList.length * 100 / (completedList.length + runningList.length)).round()}%',
                         style: Styles.style24WhiteBold
                             .copyWith(color: Colorrs.kCyan),
                       ))

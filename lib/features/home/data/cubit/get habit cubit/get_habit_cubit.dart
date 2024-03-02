@@ -9,12 +9,34 @@ part 'get_habit_state.dart';
 class GetHabitCubit extends Cubit<GetHabitState> {
   GetHabitCubit() : super(GetHabitInitial());
 
-  List<HabitModel> habitList = [];
+  List<HabitModel> runningHabitsList = [];
+  List<HabitModel> completedHabitsList = [];
   int iteration = 3;
 
   getHabits() {
     var habitBox = Hive.box<HabitModel>(Constants.habitBox);
-    habitList = habitBox.values.toList();
+    List<HabitModel> allHabits = habitBox.values.toList();
+    for (var i = 0; i < allHabits.length; i++) {
+      if (!allHabits[i].isDone) {
+        if (!runningHabitsList.contains(allHabits[i])) {
+          runningHabitsList.add(allHabits[i]);
+        }
+      } else {
+        if (!completedHabitsList.contains(allHabits[i])) {
+          completedHabitsList.add(allHabits[i]);
+        }
+      }
+      runningHabitsList.sort(
+        (a, b) {
+          return a.createdAt.compareTo(b.createdAt);
+        },
+      );
+      completedHabitsList.sort(
+        (a, b) {
+          return a.createdAt.compareTo(b.createdAt);
+        },
+      );
+    }
     emit(GetHabitSuccess());
   }
 
