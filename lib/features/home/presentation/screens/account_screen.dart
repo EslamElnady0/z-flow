@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
@@ -8,11 +9,15 @@ import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cub
 import 'package:z_flow1/features/home/presentation/widgets/custom_stats_item.dart';
 import 'package:z_flow1/features/home/presentation/widgets/profile_header.dart';
 
+import '../../../../core/constants/contstants.dart';
+
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box(Constants.pointsBox);
+    int points = box.get("score") ?? 0;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -47,7 +52,7 @@ class AccountScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  "925",
+                  points.toString(),
                   style: Styles.style16Bold.copyWith(color: Colorrs.kCyan),
                 ),
               ],

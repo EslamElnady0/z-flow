@@ -24,13 +24,14 @@ class HabitModelAdapter extends TypeAdapter<HabitModel> {
       isFavourited: fields[4] as bool,
       isIterable: fields[5] as bool,
       isDone: fields[6] as bool,
+      isDoneBefore: fields[7] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, HabitModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class HabitModelAdapter extends TypeAdapter<HabitModel> {
       ..writeByte(5)
       ..write(obj.isIterable)
       ..writeByte(6)
-      ..write(obj.isDone);
+      ..write(obj.isDone)
+      ..writeByte(7)
+      ..write(obj.isDoneBefore);
   }
 
   @override

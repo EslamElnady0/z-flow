@@ -29,6 +29,7 @@ Future<void> main() async {
   await Hive.openBox<TaskModel>(Constants.tasksBox);
   await Hive.openBox<HabitModel>(Constants.habitBox);
   await Hive.openBox<TargetModel>(Constants.targetBox);
+  await Hive.openBox(Constants.pointsBox);
   runApp(const ZFlowApp());
 }
 

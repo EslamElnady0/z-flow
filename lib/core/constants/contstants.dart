@@ -13,6 +13,7 @@ class Constants {
   static const String tasksBox = "tasks-box";
   static const String habitBox = "habit-box";
   static const String targetBox = "target-box";
+  static const String pointsBox = "points-box";
   static List<String> bottomNavBarItems = [
     "assets/images/tasks.svg",
     "assets/images/date.svg",

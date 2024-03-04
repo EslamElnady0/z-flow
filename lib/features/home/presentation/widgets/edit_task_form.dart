@@ -5,11 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/widgets/add_task_textfield.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_check_box_container.dart';
+import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class EditTaskForm extends StatefulWidget {
@@ -153,6 +155,10 @@ class _EditTaskFormState extends State<EditTaskForm> {
                     widget.taskModel.save();
                     context.read<GetTaskCubit>().getTasks();
                     Navigator.pop(context);
+                    if (!widget.taskModel.isDoneBefore) {
+                      showAnimatedDialog(context);
+                      incrementPoints();
+                    }
                   }
                 },
               ),

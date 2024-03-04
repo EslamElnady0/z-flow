@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/habits%20screens/edit_habit_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
 import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
+import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 
 class HabitItem extends StatelessWidget {
   final HabitModel habitModel;
@@ -26,18 +28,24 @@ class HabitItem extends StatelessWidget {
               value: habitModel.isDone,
               onChanged: (value) {
                 habitModel.isDone = !(habitModel.isDone);
-                habitModel.save();
                 if (habitModel.isDone) {
                   context
                       .read<GetHabitCubit>()
                       .runningHabitsList
                       .remove(habitModel);
+                  if (!habitModel.isDoneBefore) {
+                    showAnimatedDialog(context);
+                    incrementPoints();
+                  }
                 } else {
                   context
                       .read<GetHabitCubit>()
                       .completedHabitsList
                       .remove(habitModel);
                 }
+                habitModel.isDoneBefore = true;
+                habitModel.save();
+
                 context.read<GetHabitCubit>().getHabits();
               },
             );

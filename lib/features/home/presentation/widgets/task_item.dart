@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/tasks%20screens/edit_task_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
 import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
+import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 
 class TaskItem extends StatelessWidget {
   final TaskModel taskModel;
@@ -27,18 +29,25 @@ class TaskItem extends StatelessWidget {
                 value: taskModel.isDone,
                 onChanged: (value) {
                   taskModel.isDone = !(taskModel.isDone);
-                  taskModel.save();
                   if (taskModel.isDone) {
                     context
                         .read<GetTaskCubit>()
                         .runningTasksList
                         .remove(taskModel);
+                    if (!taskModel.isDoneBefore) {
+                      showAnimatedDialog(context);
+                      incrementPoints();
+                    }
+
+                    print(taskModel.isDoneBefore.toString());
                   } else {
                     context
                         .read<GetTaskCubit>()
                         .completedTasksList
                         .remove(taskModel);
                   }
+                  taskModel.isDoneBefore = true;
+                  taskModel.save();
                   context.read<GetTaskCubit>().getTasks();
                 },
               );

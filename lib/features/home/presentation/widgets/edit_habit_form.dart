@@ -5,12 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/presentation/widgets/add_task_textfield.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_check_box_container.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_iteration_container.dart';
+import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class EditHabitForm extends StatefulWidget {
@@ -150,6 +152,10 @@ class _EditHabitFormState extends State<EditHabitForm> {
                     widget.habitModel.save();
                     context.read<GetHabitCubit>().getHabits();
                     Navigator.pop(context);
+                    if (!widget.habitModel.isDoneBefore) {
+                      showAnimatedDialog(context);
+                      incrementPoints();
+                    }
                   } else {}
                 },
               ),

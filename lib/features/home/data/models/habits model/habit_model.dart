@@ -18,14 +18,16 @@ class HabitModel extends HiveObject {
   bool isIterable = false;
   @HiveField(6)
   bool isDone = false;
+  @HiveField(7)
+  bool isDoneBefore = false;
 
-  HabitModel({
-    this.iteration = 3,
-    this.title = '',
-    this.createdAt = '',
-    this.deadline = '',
-    this.isFavourited = false,
-    this.isIterable = false,
-    this.isDone = false,
-  });
+  HabitModel(
+      {this.iteration = 3,
+      this.title = '',
+      this.createdAt = '',
+      this.deadline = '',
+      this.isFavourited = false,
+      this.isIterable = false,
+      this.isDone = false,
+      this.isDoneBefore = false});
 }
