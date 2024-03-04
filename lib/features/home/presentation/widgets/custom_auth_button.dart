@@ -14,6 +14,7 @@ class CustomAuthAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       width: 100.w,
       height: 37.h,
       decoration: BoxDecoration(
@@ -24,9 +25,7 @@ class CustomAuthAccountButton extends StatelessWidget {
             color: Colorrs.kGreyDark,
             width: 2,
           )),
-      child: Center(
-        child: Text(text, style: Styles.style16Bold),
-      ),
+      child: Text(text, style: Styles.style16Bold),
     );
   }
 }
