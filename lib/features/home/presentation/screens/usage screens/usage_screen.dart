@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:z_flow1/features/home/presentation/screens/usage%20screens/usage_time_screen.dart';
 
 import 'package:z_flow1/features/home/presentation/widgets/custom_usage_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
@@ -33,7 +34,11 @@ class UsageScreen extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 56.w),
-          child: const CustomUsageButton(
+          child: CustomUsageButton(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => UsageTimeScreen()));
+            },
             text: "وقت الإستخدام",
           ),
         ),

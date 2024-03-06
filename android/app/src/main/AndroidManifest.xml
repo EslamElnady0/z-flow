@@ -1,6 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.z_flow1">
-   <application
+    package="com.example.z_flow1"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>     
+    <application
         android:label="z_flow1"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -30,5 +35,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-    </application>
+    </application>  
 </manifest>
