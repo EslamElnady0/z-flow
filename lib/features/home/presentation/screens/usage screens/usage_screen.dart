@@ -37,7 +37,7 @@ class UsageScreen extends StatelessWidget {
           child: CustomUsageButton(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => UsageTimeScreen()));
+                  MaterialPageRoute(builder: (_) => const UsageTimeScreen()));
             },
             text: "وقت الإستخدام",
           ),

@@ -22,9 +22,9 @@ class UsageListTileSubtitle extends StatelessWidget {
       case >= 0.5:
         return Colors.orange;
       case >= 0.25:
-        return Colors.blue;
+        return Colorrs.kBlue;
       default:
-        return Colorrs.kCyan;
+        return Colorrs.kCyanUsage;
     }
   }
 
