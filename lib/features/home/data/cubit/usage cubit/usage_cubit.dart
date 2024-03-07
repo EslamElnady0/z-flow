@@ -32,7 +32,7 @@ class UsageCubit extends Cubit<UsageState> {
     try {
       List<String> packageNameList = [];
       DateTime endDate = DateTime.now();
-      DateTime startDate = endDate.subtract(const Duration(hours: 8));
+      DateTime startDate = endDate.subtract(const Duration(days: 1));
       infos = await AppUsage().getAppUsage(startDate, endDate);
 
       infos.sort((a, b) => b.usage.inSeconds.compareTo(a.usage.inSeconds));
