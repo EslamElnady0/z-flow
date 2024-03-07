@@ -17,6 +17,7 @@ import 'package:z_flow1/features/home/data/cubit/add%20habit%20cubit/add_habit_c
 import 'package:z_flow1/features/home/data/cubit/add%20task%20cubit/add_task_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
+import 'package:z_flow1/features/home/data/cubit/usage%20cubit/usage_cubit.dart';
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
@@ -57,6 +58,7 @@ class ZFlowApp extends StatelessWidget {
             BlocProvider(create: (context) => AddHabitCubit()),
             BlocProvider(create: (context) => GetHabitCubit()..getHabits()),
             BlocProvider(create: (context) => AddTargetCubit()),
+            BlocProvider(create: (context) => UsageCubit()),
             BlocProvider(create: (context) => GetTargetCubit()..getTargets()),
           ],
           child: MaterialApp(
