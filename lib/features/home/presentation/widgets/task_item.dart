@@ -67,7 +67,14 @@ class TaskItem extends StatelessWidget {
             child: Center(
                 child: Row(
               children: [
-                Text(taskModel.title, style: Styles.style16),
+                SizedBox(
+                    width: 200.w,
+                    child: Text(
+                      taskModel.title,
+                      style: Styles.style16,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )),
                 const Spacer(),
                 PopupMenuButton(
                     splashRadius: 0.1,
