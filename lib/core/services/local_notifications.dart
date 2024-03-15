@@ -31,11 +31,11 @@ class LocalNotifications {
         onDidReceiveBackgroundNotificationResponse: onNotificationTapped);
   }
 
-  static Future showSimpleNotification({
-    required String title,
-    required String body,
-    required String payload,
-  }) async {
+  static Future showSimpleNotification(
+      {required String title,
+      required String body,
+      required String payload,
+      required int id}) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('your channel id', 'your channel name',
             channelDescription: 'your channel description',
@@ -45,14 +45,14 @@ class LocalNotifications {
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin
-        .show(0, title, body, notificationDetails, payload: payload);
+        .show(id, title, body, notificationDetails, payload: payload);
   }
 
-  static Future showPeriodicNotification({
-    required String title,
-    required String body,
-    required String payload,
-  }) async {
+  static Future showPeriodicNotification(
+      {required String title,
+      required String body,
+      required String payload,
+      required int id}) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('channel 2', 'your channel name',
             channelDescription: 'your channel description',
@@ -62,14 +62,14 @@ class LocalNotifications {
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin.periodicallyShow(
-        1, title, body, RepeatInterval.everyMinute, notificationDetails);
+        id, title, body, RepeatInterval.everyMinute, notificationDetails);
   }
 
-  static Future showSchadualedNotification({
-    required String title,
-    required String body,
-    required String payload,
-  }) async {
+  static Future showSchadualedNotification(
+      {required String title,
+      required String body,
+      required String payload,
+      required int id}) async {
     tz.initializeTimeZones();
     var localTime = tz.local;
     const AndroidNotificationDetails androidNotificationDetails =
@@ -82,7 +82,7 @@ class LocalNotifications {
       android: androidNotificationDetails,
     );
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        2,
+        id,
         title,
         body,
         tz.TZDateTime.now(localTime).add(const Duration(seconds: 5)),
