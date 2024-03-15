@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
+import 'package:z_flow1/core/services/local_notifications.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/add%20habit%20cubit/add_habit_cubit.dart';
@@ -33,6 +33,12 @@ class AddHabitForm extends StatefulWidget {
 
   @override
   State<AddHabitForm> createState() => _AddHabitFormState();
+}
+
+@pragma('vm:entry-point')
+callback(int id) async {
+  await LocalNotifications.showSimpleNotification(
+      title: "habit test", body: "test ya 7mada", payload: "dadasdas", id: id);
 }
 
 class _AddHabitFormState extends State<AddHabitForm> {
@@ -146,7 +152,7 @@ class _AddHabitFormState extends State<AddHabitForm> {
                         deadline: widget.deadlineController.text);
                     context.read<AddHabitCubit>().addHabit(habitModel);
                     incrementNotificationId();
-
+                    if (habitModel.isIterable) {}
                     context.read<GetHabitCubit>().getHabits();
                     Navigator.pop(context);
                     log(id.toString());
