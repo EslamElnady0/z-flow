@@ -19,6 +19,7 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 62.h,
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
         margin: EdgeInsets.symmetric(horizontal: 48.w, vertical: 14.h),
         decoration: ShapeDecoration(
           color: Colors.white,
@@ -28,19 +29,23 @@ class CustomButton extends StatelessWidget {
           shadows: [Constants.shadow],
         ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              width: 10.w,
+            const Spacer(
+              flex: 2,
             ),
             Icon(
               Icons.add,
               size: 40.r,
               color: Colorrs.kCyan,
             ),
-            SizedBox(
-              width: 5.w,
+            const Spacer(
+              flex: 1,
             ),
-            Text(text, style: Styles.style24)
+            Text(text, style: Styles.style24),
+            const Spacer(
+              flex: 2,
+            )
           ],
         ),
       ),

@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
+import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/add%20task%20cubit/add_task_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
@@ -33,6 +38,8 @@ class AddTaskForm extends StatefulWidget {
 class _AddTaskFormState extends State<AddTaskForm> {
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box(Constants.constsBox);
+    int id = box.get("id") ?? 0;
     return Form(
       key: widget.formKey,
       child: Column(
@@ -116,6 +123,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
                     var taskModel = TaskModel(
+                        id: id,
                         sideTask: widget.sideTaskController.text,
                         title: widget.taskController.text,
                         notes: widget.notesController.text,
@@ -125,9 +133,10 @@ class _AddTaskFormState extends State<AddTaskForm> {
                     context.read<GetTaskCubit>().getSpecificDayTasks(
                           DateTime.now(),
                         );
-
+                    incrementNotificationId();
                     context.read<GetTaskCubit>().getTasks();
                     Navigator.pop(context);
+                    log(id.toString());
                   }
                 },
               ),

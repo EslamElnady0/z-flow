@@ -25,13 +25,14 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       isFavourited: fields[5] as bool,
       isDone: fields[6] as bool,
       isDoneBefore: fields[7] as bool,
+      id: fields[8] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..writeByte(6)
       ..write(obj.isDone)
       ..writeByte(7)
-      ..write(obj.isDoneBefore);
+      ..write(obj.isDoneBefore)
+      ..writeByte(8)
+      ..write(obj.id);
   }
 
   @override

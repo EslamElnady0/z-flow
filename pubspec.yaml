@@ -40,11 +40,13 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   device_apps: ^2.2.0
-
   app_usage:
   intl: ^0.19.0
   table_calendar: ^3.0.9
   app_usage_tracker: ^0.0.1
+  flutter_local_notifications: ^17.0.0
+  flutter_timezone: ^1.0.8
+  rxdart: ^0.27.7
 
 dev_dependencies:
   build_runner: ^2.4.8

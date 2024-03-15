@@ -38,8 +38,6 @@ class TaskItem extends StatelessWidget {
                       showAnimatedDialog(context);
                       incrementPoints();
                     }
-
-                    print(taskModel.isDoneBefore.toString());
                   } else {
                     context
                         .read<GetTaskCubit>()

@@ -155,9 +155,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
                     widget.taskModel.save();
                     context.read<GetTaskCubit>().getTasks();
                     Navigator.pop(context);
-                    if (!widget.taskModel.isDoneBefore) {
+                    if (!widget.taskModel.isDoneBefore &&
+                        widget.taskModel.isDone) {
                       showAnimatedDialog(context);
                       incrementPoints();
+                      widget.taskModel.isDoneBefore = true;
                     }
                   }
                 },

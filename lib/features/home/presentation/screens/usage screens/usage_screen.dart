@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:z_flow1/core/services/local_notifications.dart';
 import 'package:z_flow1/features/home/presentation/screens/usage%20screens/usage_time_screen.dart';
 
 import 'package:z_flow1/features/home/presentation/widgets/custom_usage_button.dart';
@@ -47,7 +48,15 @@ class UsageScreen extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 56.w),
-          child: const CustomUsageButton(
+          child: CustomUsageButton(
+            onTap: () {
+              // LocalNotifications.showSimpleNotification(
+              //     title: "mrga",
+              //     body: "he will never zebi mrga",
+              //     payload: "mrga");
+              // LocalNotifications.showPeriodicNotification(
+              //     title: "dad", body: "ana mozah", payload: "sfsddfd");
+            },
             text: 'حدود الإستخدام',
           ),
         ),

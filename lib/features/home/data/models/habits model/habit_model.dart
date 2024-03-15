@@ -20,6 +20,8 @@ class HabitModel extends HiveObject {
   bool isDone = false;
   @HiveField(7)
   bool isDoneBefore = false;
+  @HiveField(8)
+  int id = 0;
 
   HabitModel(
       {this.iteration = 3,
@@ -29,5 +31,6 @@ class HabitModel extends HiveObject {
       this.isFavourited = false,
       this.isIterable = false,
       this.isDone = false,
-      this.isDoneBefore = false});
+      this.isDoneBefore = false,
+      this.id = 0});
 }

@@ -20,11 +20,14 @@ class TaskModel extends HiveObject {
   bool isDone = false;
   @HiveField(7)
   bool isDoneBefore = false;
+  @HiveField(8)
+  final int id;
 
   TaskModel(
       {required this.sideTask,
       required this.title,
       required this.notes,
+      required this.id,
       required this.createdAt,
       this.isDoneBefore = false,
       required this.deadline,

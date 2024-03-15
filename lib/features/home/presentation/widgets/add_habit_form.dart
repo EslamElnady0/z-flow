@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
+import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
+import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/add%20habit%20cubit/add_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
@@ -41,6 +46,8 @@ class _AddHabitFormState extends State<AddHabitForm> {
 
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box(Constants.constsBox);
+    int id = box.get("id") ?? 0;
     return Form(
       key: widget.formKey,
       child: Column(
@@ -129,6 +136,7 @@ class _AddHabitFormState extends State<AddHabitForm> {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
                     habitModel = HabitModel(
+                        id: id,
                         title: widget.habitController.text,
                         isIterable: isIterable,
                         createdAt: DateFormat.yMMMd().format(
@@ -137,8 +145,11 @@ class _AddHabitFormState extends State<AddHabitForm> {
                         iteration: context.read<GetHabitCubit>().iteration,
                         deadline: widget.deadlineController.text);
                     context.read<AddHabitCubit>().addHabit(habitModel);
+                    incrementNotificationId();
+
                     context.read<GetHabitCubit>().getHabits();
                     Navigator.pop(context);
+                    log(id.toString());
                   } else {}
                 },
               ),

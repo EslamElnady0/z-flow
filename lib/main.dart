@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
+import 'package:z_flow1/core/services/local_notifications.dart';
 import 'package:z_flow1/core/theme/theme.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/auth_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/login_screen.dart';
@@ -23,6 +24,8 @@ import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart'
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  LocalNotifications.init();
   await Hive.initFlutter();
   Hive.registerAdapter(TaskModelAdapter());
   Hive.registerAdapter(HabitModelAdapter());
@@ -30,7 +33,7 @@ Future<void> main() async {
   await Hive.openBox<TaskModel>(Constants.tasksBox);
   await Hive.openBox<HabitModel>(Constants.habitBox);
   await Hive.openBox<TargetModel>(Constants.targetBox);
-  await Hive.openBox(Constants.pointsBox);
+  await Hive.openBox(Constants.constsBox);
   runApp(const ZFlowApp());
 }
 

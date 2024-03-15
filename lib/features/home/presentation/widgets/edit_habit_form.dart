@@ -152,9 +152,11 @@ class _EditHabitFormState extends State<EditHabitForm> {
                     widget.habitModel.save();
                     context.read<GetHabitCubit>().getHabits();
                     Navigator.pop(context);
-                    if (!widget.habitModel.isDoneBefore) {
+                    if (!widget.habitModel.isDoneBefore &&
+                        widget.habitModel.isDone) {
                       showAnimatedDialog(context);
                       incrementPoints();
+                      widget.habitModel.isDoneBefore = true;
                     }
                   } else {}
                 },

@@ -16,7 +16,7 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var box = Hive.box(Constants.pointsBox);
+    var box = Hive.box(Constants.constsBox);
     int points = box.get("score") ?? 0;
     return SingleChildScrollView(
       child: Column(
