@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
+import 'package:z_flow1/core/services/local_notifications.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
@@ -174,6 +175,22 @@ class _EditHabitFormState extends State<EditHabitForm> {
                     } else {
                       Workmanager()
                           .cancelByTag("habit ${widget.habitModel.id}");
+                      if (widget.habitModel.iteration != 3) {
+                        for (var i = 0;
+                            i < widget.habitModel.iteration - 1;
+                            i++) {
+                          LocalNotifications.cancelNotification(
+                              id: int.parse("${widget.habitModel.id}0000$i"));
+                        }
+                      } else {
+                        for (var i = 0;
+                            i < widget.habitModel.iteration - 1;
+                            i++) {
+                          LocalNotifications.cancelNotification(
+                              id: int.parse(
+                                  "${widget.habitModel.id}0000${i * 2}"));
+                        }
+                      }
                     }
                   } else {}
                 },

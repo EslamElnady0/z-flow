@@ -95,7 +95,7 @@ class LocalNotifications {
       required String title,
       required int id,
       required String body}) {
-    if (iteration == 7 || iteration == 6 || iteration == 5 || iteration == 4) {
+    if (iteration != 3) {
       for (int i = 0; i < iteration - 1; i++) {
         tz.TZDateTime scheduledDate = tz.TZDateTime(
           tz.local,
