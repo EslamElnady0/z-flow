@@ -71,8 +71,6 @@ class LocalNotifications {
       required String payload,
       required tz.TZDateTime scheduledDate,
       required int id}) async {
-    tz.initializeTimeZones();
-    var localTime = tz.local;
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('channel 3', 'your channel name',
             channelDescription: 'your channel description',
@@ -95,6 +93,7 @@ class LocalNotifications {
       required String title,
       required int id,
       required String body}) {
+    tz.initializeTimeZones();
     if (iteration != 3) {
       for (int i = 0; i < iteration - 1; i++) {
         tz.TZDateTime scheduledDate = tz.TZDateTime(
@@ -102,7 +101,7 @@ class LocalNotifications {
           tz.TZDateTime.now(tz.local).year,
           tz.TZDateTime.now(tz.local).month,
           tz.TZDateTime.now(tz.local).day + i,
-          10, // Hour
+          tz.TZDateTime.now(tz.local).hour + 2,
           0, // Minute
         );
         LocalNotifications.showSchadualedNotification(
@@ -119,7 +118,7 @@ class LocalNotifications {
           tz.TZDateTime.now(tz.local).year,
           tz.TZDateTime.now(tz.local).month,
           tz.TZDateTime.now(tz.local).day + i * 2,
-          10, // Hour
+          tz.TZDateTime.now(tz.local).hour + 2,
           0, // Minute
         );
         LocalNotifications.showSchadualedNotification(

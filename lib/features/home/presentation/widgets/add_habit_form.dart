@@ -165,7 +165,6 @@ class _AddHabitFormState extends State<AddHabitForm> {
                     }
                     context.read<GetHabitCubit>().getHabits();
                     Navigator.pop(context);
-                    log(id.toString());
                   } else {}
                 },
               ),

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,9 +24,10 @@ import 'package:z_flow1/features/home/data/cubit/usage%20cubit/usage_cubit.dart'
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
-@pragma(
-    'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+@pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {
     LocalNotifications.setScheduledNotificationOnIteration(
@@ -35,19 +35,16 @@ void callbackDispatcher() {
         title: inputData["title"],
         id: inputData["id"],
         body: "You have to do your habit rn mf");
-    print(task); //simpleTask will be emitted here.
+    print(task);
     return Future.value(true);
   });
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
   LocalNotifications.init();
-  Workmanager().initialize(
-      callbackDispatcher, // The top level function, aka callbackDispatcher
-      isInDebugMode:
-          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-      );
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
 
   await Hive.initFlutter();
   Hive.registerAdapter(TaskModelAdapter());
