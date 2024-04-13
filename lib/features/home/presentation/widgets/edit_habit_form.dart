@@ -164,6 +164,7 @@ class _EditHabitFormState extends State<EditHabitForm> {
                       Workmanager().registerPeriodicTask(
                           "task-${widget.habitModel.id}",
                           "habit ${widget.habitModel.id}",
+                          tag: "${widget.habitModel.id}",
                           frequency: const Duration(days: 7),
                           inputData: <String, dynamic>{
                             "id": widget.habitModel.id,
@@ -172,7 +173,7 @@ class _EditHabitFormState extends State<EditHabitForm> {
                           });
                     } else {
                       Workmanager()
-                          .cancelByTag("habit ${widget.habitModel.id}");
+                          .cancelByUniqueName("task-${widget.habitModel.id}");
                     }
                   } else {}
                 },

@@ -101,8 +101,8 @@ class LocalNotifications {
           tz.TZDateTime.now(tz.local).year,
           tz.TZDateTime.now(tz.local).month,
           tz.TZDateTime.now(tz.local).day + i,
-          tz.TZDateTime.now(tz.local).hour + 2,
-          0, // Minute
+          tz.TZDateTime.now(tz.local).hour,
+          tz.TZDateTime.now(tz.local).minute + 1,
         );
         LocalNotifications.showSchadualedNotification(
             title: title,
@@ -118,8 +118,8 @@ class LocalNotifications {
           tz.TZDateTime.now(tz.local).year,
           tz.TZDateTime.now(tz.local).month,
           tz.TZDateTime.now(tz.local).day + i * 2,
-          tz.TZDateTime.now(tz.local).hour + 2,
-          0, // Minute
+          tz.TZDateTime.now(tz.local).hour,
+          tz.TZDateTime.now(tz.local).minute + 1,
         );
         LocalNotifications.showSchadualedNotification(
             title: title,
