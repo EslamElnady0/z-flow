@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:workmanager/workmanager.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
@@ -157,6 +158,22 @@ class _EditHabitFormState extends State<EditHabitForm> {
                       showAnimatedDialog(context);
                       incrementPoints();
                       widget.habitModel.isDoneBefore = true;
+                    }
+                    if (widget.habitModel.isIterable) {
+                      if (widget.habitModel.isIterable) {
+                        Workmanager().registerPeriodicTask(
+                            "task-${widget.habitModel.id}",
+                            "habit ${widget.habitModel.id}",
+                            frequency: const Duration(days: 7),
+                            inputData: <String, dynamic>{
+                              "id": widget.habitModel.id,
+                              "title": widget.habitModel.title,
+                              "iteration": widget.habitModel.iteration,
+                            });
+                      }
+                    } else {
+                      Workmanager()
+                          .cancelByTag("habit ${widget.habitModel.id}");
                     }
                   } else {}
                 },

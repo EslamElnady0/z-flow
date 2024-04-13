@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:workmanager/workmanager.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/services/local_notifications.dart';
@@ -152,7 +153,16 @@ class _AddHabitFormState extends State<AddHabitForm> {
                         deadline: widget.deadlineController.text);
                     context.read<AddHabitCubit>().addHabit(habitModel);
                     incrementNotificationId();
-                    if (habitModel.isIterable) {}
+                    if (habitModel.isIterable) {
+                      Workmanager().registerPeriodicTask(
+                          "task-$id", "habit $id",
+                          frequency: const Duration(days: 7),
+                          inputData: <String, dynamic>{
+                            "id": id,
+                            "title": habitModel.title,
+                            "iteration": habitModel.iteration,
+                          });
+                    }
                     context.read<GetHabitCubit>().getHabits();
                     Navigator.pop(context);
                     log(id.toString());

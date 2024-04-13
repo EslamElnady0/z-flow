@@ -69,6 +69,7 @@ class LocalNotifications {
       {required String title,
       required String body,
       required String payload,
+      required tz.TZDateTime scheduledDate,
       required int id}) async {
     tz.initializeTimeZones();
     var localTime = tz.local;
@@ -82,15 +83,53 @@ class LocalNotifications {
       android: androidNotificationDetails,
     );
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        tz.TZDateTime.now(localTime).add(const Duration(seconds: 5)),
-        notificationDetails,
+        id, title, body, scheduledDate, notificationDetails,
         payload: payload,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+  }
+
+  static void setScheduledNotificationOnIteration(
+      {required int iteration,
+      required String title,
+      required int id,
+      required String body}) {
+    if (iteration == 7 || iteration == 6 || iteration == 5 || iteration == 4) {
+      for (int i = 0; i < iteration - 1; i++) {
+        tz.TZDateTime scheduledDate = tz.TZDateTime(
+          tz.local,
+          tz.TZDateTime.now(tz.local).year,
+          tz.TZDateTime.now(tz.local).month,
+          tz.TZDateTime.now(tz.local).day + i,
+          10, // Hour
+          0, // Minute
+        );
+        LocalNotifications.showSchadualedNotification(
+            title: title,
+            body: body,
+            payload: "",
+            scheduledDate: scheduledDate,
+            id: int.parse("${id}0000$i"));
+      }
+    } else {
+      for (int i = 0; i < iteration - 1; i++) {
+        tz.TZDateTime scheduledDate = tz.TZDateTime(
+          tz.local,
+          tz.TZDateTime.now(tz.local).year,
+          tz.TZDateTime.now(tz.local).month,
+          tz.TZDateTime.now(tz.local).day + i * 2,
+          10, // Hour
+          0, // Minute
+        );
+        LocalNotifications.showSchadualedNotification(
+            title: title,
+            body: body,
+            payload: "",
+            scheduledDate: scheduledDate,
+            id: int.parse("${id}0000$i"));
+      }
+    }
   }
 
   static Future cancelNotification({required int id}) async {
