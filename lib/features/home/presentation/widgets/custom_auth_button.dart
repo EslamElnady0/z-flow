@@ -6,26 +6,27 @@ import 'package:z_flow1/core/styles/styles.dart';
 
 class CustomAuthAccountButton extends StatelessWidget {
   final String text;
-  const CustomAuthAccountButton({
-    super.key,
-    required this.text,
-  });
+  final Function()? onTap;
+  const CustomAuthAccountButton({super.key, required this.text, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: 100.w,
-      height: 37.h,
-      decoration: BoxDecoration(
-          color: Colorrs.kBackground,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [Constants.shadow],
-          border: Border.all(
-            color: Colorrs.kGreyDark,
-            width: 2,
-          )),
-      child: Text(text, style: Styles.style16Bold),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        width: 100.w,
+        height: 37.h,
+        decoration: BoxDecoration(
+            color: Colorrs.kBackground,
+            borderRadius: BorderRadius.circular(16.r),
+            boxShadow: [Constants.shadow],
+            border: Border.all(
+              color: Colorrs.kGreyDark,
+              width: 2,
+            )),
+        child: Text(text, style: Styles.style16Bold),
+      ),
     );
   }
 }

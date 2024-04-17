@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:z_flow1/core/services/firebase_auth.dart';
 import 'package:z_flow1/core/util/context_helpers.dart';
 
 import '../widgets/auth_footer.dart';
@@ -19,6 +21,18 @@ class PasswordRecoveryScreen extends StatefulWidget {
 class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
   GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+  late TextEditingController emailController;
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +49,10 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                 SizedBox(
                   height: context.height * 0.0283251231527094,
                 ),
-                const Text(
+                Text(
                   "Forgot Your Password?",
                   style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 30.sp,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
@@ -47,6 +61,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.width * 0.112),
                   child: CustomTextFormField(
+                    controller: emailController,
                     autoValidateMode: autoValidateMode,
                     validate: (data) {
                       if (data!.isEmpty) {
@@ -67,10 +82,15 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                 ),
                 SizedBox(height: context.height * 0.0874384236453202),
                 CustomAuthButton(
-                    title: "Log In",
-                    onTap: () {
+                    width: 200.w,
+                    title: "Reset Password",
+                    onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        //Navigator.pushReplacementNamed(context, routeName)
+                        FireBaseAuthService firebaseAuthService =
+                            FireBaseAuthService();
+
+                        await firebaseAuthService.resetPassword(
+                            email: emailController.text, context: context);
                       } else {
                         autoValidateMode = AutovalidateMode.always;
                       }

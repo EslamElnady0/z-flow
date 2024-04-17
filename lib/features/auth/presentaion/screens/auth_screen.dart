@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 
+import '../../../../core/services/firebase_auth.dart';
 import '../widgets/auth_bottom_screen_button.dart';
 import '../widgets/auth_screens_header.dart';
 import '../widgets/custom_auth_button.dart';
@@ -46,11 +48,15 @@ class AuthScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/images/google (2) 2.png"),
+              GestureDetector(
+                  onTap: () async {
+                    await FireBaseAuthService()
+                        .signInWithGoogle(context: context);
+                  },
+                  child: Image.asset("assets/images/google (2) 2.png")),
               SizedBox(
                 width: 20.w,
               ),
-              Image.asset("assets/images/_Group_2.png")
             ],
           ),
           const Spacer(
@@ -59,8 +65,13 @@ class AuthScreen extends StatelessWidget {
           Padding(
               padding: EdgeInsets.only(right: 10.w, bottom: 16.h),
               child: AuthBottomButtonForward(
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, HomeScreen.pageName);
+                onTap: () async {
+                  await FireBaseAuthService()
+                      .signInAnonymously(context: context);
+                  if (context.mounted) {
+                    Navigator.pushReplacementNamed(
+                        context, HomeScreen.pageName);
+                  }
                 },
                 title: 'Skip',
                 icon: Icons.keyboard_double_arrow_right_outlined,

@@ -108,7 +108,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           ),
                           TextButton(
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
+                                Navigator.pushNamed(
                                     context, PasswordRecoveryScreen.pageName);
                               },
                               child: const Text(
@@ -124,7 +124,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                 onTap: () async {
                                   if (formKey.currentState!.validate()) {
                                     await FireBaseAuthService()
-                                        .signInWithEmailAndPassword(
+                                        .signInWithNormalEmailAndPassword(
                                             email: emailController.text,
                                             password: passwordController.text,
                                             context: context);

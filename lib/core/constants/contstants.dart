@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:z_flow1/features/drawer/presentation/screens/advices_screen.dart';
-import 'package:z_flow1/features/drawer/presentation/screens/entertainment_screen.dart';
+// import 'package:z_flow1/features/drawer/presentation/screens/advices_screen.dart';
+// import 'package:z_flow1/features/drawer/presentation/screens/entertainment_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/favourite_habits_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/favourite_tasks_screen.dart';
-import 'package:z_flow1/features/drawer/presentation/screens/motivation_screen.dart';
+// import 'package:z_flow1/features/drawer/presentation/screens/motivation_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/target%20screen/target_screen.dart';
 import 'package:z_flow1/features/drawer/presentation/screens/work_session_screen.dart';
 
@@ -33,58 +33,58 @@ class Constants {
   static List<Map<String, dynamic>> drawerItems = [
     {
       "title": "فتح جلسة عمل",
-      "icon": FontAwesomeIcons.clock,
+      "icon": FontAwesomeIcons.clock, //1
     },
     {
       "title": "مهام مفضلة",
-      "icon": FontAwesomeIcons.star,
+      "icon": FontAwesomeIcons.star, //2
     },
     {
       "title": "عادات مفضلة",
-      "icon": FontAwesomeIcons.star,
+      "icon": FontAwesomeIcons.star, //3
     },
-    {"title": "المنافسة", "icon": FontAwesomeIcons.userGroup},
-    {
-      "title": "تصنيفات",
-      "icon": FontAwesomeIcons.rankingStar,
-    },
-    {
-      "title": "نصائح",
-      "icon": FontAwesomeIcons.scroll,
-    },
-    {
-      "title": "تحفيز",
-      "icon": FontAwesomeIcons.handFist,
-    },
-    {"title": "اقتراحات للترفيه", "icon": FontAwesomeIcons.masksTheater},
+    // {"title": "المنافسة", "icon": FontAwesomeIcons.userGroup},
+    // {
+    //   "title": "تصنيفات",
+    //   "icon": FontAwesomeIcons.rankingStar,
+    // },
+    // {
+    //   "title": "نصائح",
+    //   "icon": FontAwesomeIcons.scroll,
+    // },
+    // {
+    //   "title": "تحفيز",
+    //   "icon": FontAwesomeIcons.handFist,
+    // },
+    // {"title": "اقتراحات للترفيه", "icon": FontAwesomeIcons.masksTheater}, /
     {
       "title": "أهدافي",
-      "icon": FontAwesomeIcons.crosshairs,
+      "icon": FontAwesomeIcons.crosshairs, //4
     },
-    {
-      "title": "إضافة أداة",
-      "icon": FontAwesomeIcons.squarePlus,
-    },
-    {"title": "دعم", "icon": FontAwesomeIcons.handHoldingHeart},
-    {"title": "الإعدادات", "icon": FontAwesomeIcons.gear},
+    // {
+    //   "title": "إضافة أداة",
+    //   "icon": FontAwesomeIcons.squarePlus, //
+    // },
+    //{"title": "دعم", "icon": FontAwesomeIcons.handHoldingHeart}, //11
+    {"title": "الإعدادات", "icon": FontAwesomeIcons.gear}, //5
     {
       "title": "مشاركة التطبيق",
-      "icon": FontAwesomeIcons.shareNodes,
+      "icon": FontAwesomeIcons.shareNodes, //6
     },
   ];
   static const List<Widget> drawerScreens = [
-    WorkSessionScreen(),
-    FavouriteTasksScreen(),
-    FavouriteHabitsScrenn(),
-    Scaffold(),
-    Scaffold(),
-    AdvicesScreen(),
-    MotivationScreen(),
-    EntertainmentScreen(),
-    TargetScreen(),
-    Scaffold(),
-    Scaffold(),
-    Scaffold(),
+    WorkSessionScreen(), //1
+    FavouriteTasksScreen(), //2
+    FavouriteHabitsScrenn(), //3
+    // Scaffold(),
+    // Scaffold(),
+    // AdvicesScreen(),
+    // MotivationScreen(),
+    // EntertainmentScreen(),
+    TargetScreen(), //4
+    //  Scaffold(), //10
+    Scaffold(), //5
+    Scaffold(), //6
   ];
 
   static BoxShadow shadow = const BoxShadow(

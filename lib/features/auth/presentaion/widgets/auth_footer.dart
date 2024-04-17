@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:z_flow1/core/services/firebase_auth.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 
 import 'auth_bottom_screen_button.dart';
@@ -17,8 +18,11 @@ class AuthFooter extends StatelessWidget {
           icon: Icons.keyboard_double_arrow_left_outlined),
       const Spacer(),
       AuthBottomButtonForward(
-          onTap: () {
-            Navigator.pushReplacementNamed(context, HomeScreen.pageName);
+          onTap: () async {
+            await FireBaseAuthService().signInAnonymously(context: context);
+            if (context.mounted) {
+              Navigator.pushReplacementNamed(context, HomeScreen.pageName);
+            }
           },
           title: "Skip",
           icon: Icons.keyboard_double_arrow_right_outlined),
