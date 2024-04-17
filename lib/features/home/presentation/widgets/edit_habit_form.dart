@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:workmanager/workmanager.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
+import 'package:z_flow1/core/services/local_notifications.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
@@ -87,12 +87,12 @@ class _EditHabitFormState extends State<EditHabitForm> {
           BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
             return Column(
               children: [
-                CustomIterationContainer(
-                  habitModel: widget.habitModel,
-                ),
-                SizedBox(
-                  height: 24.h,
-                ),
+                // CustomIterationContainer(
+                //   habitModel: widget.habitModel,
+                // ),
+                // SizedBox(
+                //   height: 24.h,
+                // ),
                 CustomCheckBoxContainer(
                   value: widget.habitModel.isIterable,
                   text: "تذكير بهذه العادة",
@@ -161,19 +161,15 @@ class _EditHabitFormState extends State<EditHabitForm> {
                     }
 
                     if (widget.habitModel.isIterable) {
-                      Workmanager().registerPeriodicTask(
-                          "task-${widget.habitModel.id}",
-                          "habit ${widget.habitModel.id}",
-                          tag: "${widget.habitModel.id}",
-                          frequency: const Duration(days: 7),
-                          inputData: <String, dynamic>{
-                            "id": widget.habitModel.id,
-                            "title": widget.habitModel.title,
-                            "iteration": widget.habitModel.iteration,
-                          });
+                      LocalNotifications.showSchadualedNotification(
+                          title: widget.habitModel.title,
+                          body: "${widget.habitModel.title} تتصل بك ",
+                          payload: "",
+                          scheduledDate: LocalNotifications.scheduleDaily(),
+                          id: widget.habitModel.id);
                     } else {
-                      Workmanager()
-                          .cancelByUniqueName("task-${widget.habitModel.id}");
+                      LocalNotifications.cancelNotification(
+                          id: widget.habitModel.id);
                     }
                   } else {}
                 },

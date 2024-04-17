@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:workmanager/workmanager.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/services/local_notifications.dart';
 import 'package:z_flow1/core/theme/theme.dart';
@@ -24,28 +23,10 @@ import 'package:z_flow1/features/home/data/cubit/usage%20cubit/usage_cubit.dart'
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
-
-@pragma('vm:entry-point')
-void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) {
-    LocalNotifications.setScheduledNotificationOnIteration(
-        iteration: inputData!["iteration"],
-        title: inputData["title"],
-        id: inputData["id"],
-        body: "You have to do your habit rn mf");
-    print(task);
-    return Future.value(true);
-  });
-}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  tz.initializeTimeZones();
   LocalNotifications.init();
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-
   await Hive.initFlutter();
   Hive.registerAdapter(TaskModelAdapter());
   Hive.registerAdapter(HabitModelAdapter());

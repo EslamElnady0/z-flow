@@ -26,6 +26,8 @@ class LocalNotifications {
             android: initializationSettingsAndroid,
             iOS: initializationSettingsDarwin,
             linux: initializationSettingsLinux);
+    tz.initializeTimeZones();
+
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: onNotificationTapped,
         onDidReceiveBackgroundNotificationResponse: onNotificationTapped);
@@ -62,7 +64,7 @@ class LocalNotifications {
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin.periodicallyShow(
-        id, title, body, RepeatInterval.everyMinute, notificationDetails);
+        id, title, body, RepeatInterval.daily, notificationDetails);
   }
 
   static Future showSchadualedNotification(
@@ -83,52 +85,22 @@ class LocalNotifications {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         id, title, body, scheduledDate, notificationDetails,
         payload: payload,
+        matchDateTimeComponents: DateTimeComponents.time,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
   }
 
-  static void setScheduledNotificationOnIteration(
-      {required int iteration,
-      required String title,
-      required int id,
-      required String body}) {
-    tz.initializeTimeZones();
-    if (iteration != 3) {
-      for (int i = 0; i < iteration - 1; i++) {
-        tz.TZDateTime scheduledDate = tz.TZDateTime(
-          tz.local,
-          tz.TZDateTime.now(tz.local).year,
-          tz.TZDateTime.now(tz.local).month,
-          tz.TZDateTime.now(tz.local).day + i,
-          tz.TZDateTime.now(tz.local).hour,
-          tz.TZDateTime.now(tz.local).minute + 1,
-        );
-        LocalNotifications.showSchadualedNotification(
-            title: title,
-            body: body,
-            payload: "",
-            scheduledDate: scheduledDate,
-            id: int.parse("${id}0000$i"));
-      }
-    } else {
-      for (int i = 0; i < iteration - 1; i++) {
-        tz.TZDateTime scheduledDate = tz.TZDateTime(
-          tz.local,
-          tz.TZDateTime.now(tz.local).year,
-          tz.TZDateTime.now(tz.local).month,
-          tz.TZDateTime.now(tz.local).day + i * 2,
-          tz.TZDateTime.now(tz.local).hour,
-          tz.TZDateTime.now(tz.local).minute + 1,
-        );
-        LocalNotifications.showSchadualedNotification(
-            title: title,
-            body: body,
-            payload: "",
-            scheduledDate: scheduledDate,
-            id: int.parse("${id}0000$i"));
-      }
-    }
+  static tz.TZDateTime scheduleDaily() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+        tz.local, now.year, now.month, now.day, now.hour, now.minute + 1);
+    // if (scheduledDate.isBefore(now)) {
+    //   scheduledDate = scheduledDate.add(const Duration(days: 1));
+    // }
+    return scheduledDate.isBefore(now)
+        ? scheduledDate.add(const Duration(days: 1))
+        : scheduledDate;
   }
 
   static Future cancelNotification({required int id}) async {

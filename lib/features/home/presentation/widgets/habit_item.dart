@@ -13,6 +13,8 @@ import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_it
 import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
 import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 
+import '../../../../core/services/local_notifications.dart';
+
 class HabitItem extends StatelessWidget {
   final HabitModel habitModel;
   const HabitItem({super.key, required this.habitModel});
@@ -132,6 +134,8 @@ class HabitItem extends StatelessWidget {
                               context
                                   .read<GetFavouriteCubit>()
                                   .getFavouriteHabits();
+                              LocalNotifications.cancelNotification(
+                                  id: habitModel.id);
                             },
                             child: const CustomPopUpMenuItem(
                               title: "حذف",

@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:workmanager/workmanager.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/services/local_notifications.dart';
@@ -33,12 +32,6 @@ class AddHabitForm extends StatefulWidget {
 
   @override
   State<AddHabitForm> createState() => _AddHabitFormState();
-}
-
-@pragma('vm:entry-point')
-callback(int id) async {
-  await LocalNotifications.showSimpleNotification(
-      title: "habit test", body: "test ya 7mada", payload: "dadasdas", id: id);
 }
 
 class _AddHabitFormState extends State<AddHabitForm> {
@@ -104,12 +97,12 @@ class _AddHabitFormState extends State<AddHabitForm> {
           BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
             return Column(
               children: [
-                CustomIterationContainer(
-                  habitModel: habitModel,
-                ),
-                SizedBox(
-                  height: 24.h,
-                ),
+                // CustomIterationContainer(
+                //   habitModel: habitModel,
+                // ),
+                // SizedBox(
+                //   height: 24.h,
+                // ),
                 CustomCheckBoxContainer(
                   value: isIterable,
                   text: "تذكير بهذه العادة",
@@ -153,14 +146,12 @@ class _AddHabitFormState extends State<AddHabitForm> {
                     context.read<AddHabitCubit>().addHabit(habitModel);
                     incrementNotificationId();
                     if (habitModel.isIterable) {
-                      Workmanager().registerPeriodicTask(
-                          "task-$id", "habit $id",
-                          frequency: const Duration(days: 7),
-                          inputData: <String, dynamic>{
-                            "id": id,
-                            "title": habitModel.title,
-                            "iteration": habitModel.iteration,
-                          });
+                      LocalNotifications.showSchadualedNotification(
+                          title: habitModel.title,
+                          body: "${habitModel.title} يتصل بك ",
+                          payload: "",
+                          scheduledDate: LocalNotifications.scheduleDaily(),
+                          id: habitModel.id);
                     }
                     context.read<GetHabitCubit>().getHabits();
                     Navigator.pop(context);
