@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:z_flow1/core/services/firebase_auth.dart';
 import 'package:z_flow1/core/util/context_helpers.dart';
-import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/widgets/custom_auth_button.dart';
 import 'package:z_flow1/features/auth/presentaion/widgets/custom_textformfield.dart';
 
@@ -144,10 +144,12 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             CustomAuthButton(
                 title: "Sign up",
-                onTap: () {
+                onTap: () async {
                   if (widget.formKey.currentState!.validate()) {
-                    Navigator.pushReplacementNamed(
-                        context, MotivationSplashScreen.pageName);
+                    await FireBaseAuthService().signUpWithNormalEmail(
+                        email: widget.emailController.text,
+                        password: widget.passwordController.text,
+                        context: context);
                   } else {
                     autoValidateMode = AutovalidateMode.always;
                     setState(() {});

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:z_flow1/core/services/firebase_auth.dart';
 
 import 'package:z_flow1/core/util/context_helpers.dart';
+import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 
 import '../widgets/custom_background.dart';
 import 'auth_screen.dart';
@@ -15,8 +17,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      Navigator.pushReplacementNamed(context, AuthScreen.pageName);
+    Future.delayed(const Duration(seconds: 1)).then((value) {
+      Navigator.pushReplacementNamed(
+          context,
+          FireBaseAuthService().auth.currentUser == null
+              ? AuthScreen.pageName
+              : HomeScreen.pageName);
     });
     super.initState();
   }

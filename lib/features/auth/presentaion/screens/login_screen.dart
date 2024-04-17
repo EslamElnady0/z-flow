@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
+import 'package:z_flow1/core/services/firebase_auth.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/password_recovery_screen.dart';
 import 'package:z_flow1/core/util/context_helpers.dart';
 
@@ -19,9 +19,24 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
   GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
   bool isPassword = true;
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +60,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           CustomTextFormField(
+                            controller: emailController,
                             validate: (data) {
                               if (data!.isEmpty) {
                                 return "this field is required";
@@ -66,6 +82,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             height: context.height * 0.0295566502463054,
                           ),
                           CustomTextFormField(
+                            controller: passwordController,
                             validate: (data) {
                               if (data!.isEmpty) {
                                 return "this field is required";
@@ -104,10 +121,13 @@ class _LogInScreenState extends State<LogInScreen> {
                           Center(
                             child: CustomAuthButton(
                                 title: "Log in",
-                                onTap: () {
+                                onTap: () async {
                                   if (formKey.currentState!.validate()) {
-                                    Navigator.pushReplacementNamed(context,
-                                        MotivationSplashScreen.pageName);
+                                    await FireBaseAuthService()
+                                        .signInWithEmailAndPassword(
+                                            email: emailController.text,
+                                            password: passwordController.text,
+                                            context: context);
                                   } else {
                                     autoValidateMode = AutovalidateMode.always;
                                     setState(() {});

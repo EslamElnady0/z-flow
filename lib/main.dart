@@ -72,21 +72,20 @@ class ZFlowApp extends StatelessWidget {
             BlocProvider(create: (context) => GetTargetCubit()..getTargets()),
           ],
           child: MaterialApp(
-            locale: const Locale("en-US"),
-            theme: AppTheme.lightTheme,
-            routes: {
-              AuthScreen.pageName: (context) => const AuthScreen(),
-              LogInScreen.pageName: (context) => const LogInScreen(),
-              SignUpScreen.pageName: (context) => const SignUpScreen(),
-              PasswordRecoveryScreen.pageName: (context) =>
-                  const PasswordRecoveryScreen(),
-              MotivationSplashScreen.pageName: (context) =>
-                  const MotivationSplashScreen(),
-              HomeScreen.pageName: (context) => const HomeScreen(),
-            },
-            debugShowCheckedModeBanner: false,
-            home: const SplashScreen(),
-          ),
+              locale: const Locale("en-US"),
+              theme: AppTheme.lightTheme,
+              routes: {
+                AuthScreen.pageName: (context) => const AuthScreen(),
+                LogInScreen.pageName: (context) => const LogInScreen(),
+                SignUpScreen.pageName: (context) => const SignUpScreen(),
+                PasswordRecoveryScreen.pageName: (context) =>
+                    const PasswordRecoveryScreen(),
+                MotivationSplashScreen.pageName: (context) =>
+                    const MotivationSplashScreen(),
+                HomeScreen.pageName: (context) => const HomeScreen(),
+              },
+              debugShowCheckedModeBanner: false,
+              home: const SplashScreen()),
         );
       }),
     );
