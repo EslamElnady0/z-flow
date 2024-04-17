@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:z_flow1/core/util/context_helpers.dart';
 
@@ -20,8 +21,8 @@ class AuthScreensHeader extends StatelessWidget {
           "assets/images/Z-Flow.png",
           width: context.width * 0.2,
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: 20.h,
         ),
         const Divider(
           color: Colors.white,

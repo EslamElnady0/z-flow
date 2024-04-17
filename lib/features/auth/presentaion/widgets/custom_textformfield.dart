@@ -9,6 +9,7 @@ class CustomTextFormField extends StatefulWidget {
   final IconData prefixIcon;
   final VoidCallback? onTap;
   final bool isPassword;
+  final TextEditingController? controller;
   final TextInputType? keyboardType;
   final String? Function(String?)? validate;
   AutovalidateMode? autoValidateMode = AutovalidateMode.disabled;
@@ -23,6 +24,7 @@ class CustomTextFormField extends StatefulWidget {
     this.onTap,
     required this.isPassword,
     super.key,
+    this.controller,
   });
 
   @override
@@ -33,6 +35,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       autovalidateMode: widget.autoValidateMode,
       cursorColor: Colors.white,
       style: const TextStyle(color: Colors.white),

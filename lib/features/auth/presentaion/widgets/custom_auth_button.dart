@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:z_flow1/core/util/context_helpers.dart';
 
@@ -21,11 +22,13 @@ class CustomAuthButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white, width: 2),
-            borderRadius: BorderRadius.circular(16)),
+            borderRadius: BorderRadius.circular(16.r)),
         child: Text(
           title,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 23, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 23.sp,
+              fontWeight: FontWeight.bold),
         ),
       ),
     );

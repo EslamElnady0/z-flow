@@ -48,8 +48,13 @@ class _LogInScreenState extends State<LogInScreen> {
                             validate: (data) {
                               if (data!.isEmpty) {
                                 return "this field is required";
+                              } else if (!RegExp(
+                                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                  .hasMatch(data)) {
+                                return "please enter a valid email";
+                              } else {
+                                return null;
                               }
-                              return null;
                             },
                             autoValidateMode: autoValidateMode,
                             keyboardType: TextInputType.emailAddress,
@@ -64,8 +69,11 @@ class _LogInScreenState extends State<LogInScreen> {
                             validate: (data) {
                               if (data!.isEmpty) {
                                 return "this field is required";
+                              } else if (data.length < 6) {
+                                return "password must be at least 6 characters";
+                              } else {
+                                return null;
                               }
-                              return null;
                             },
                             autoValidateMode: autoValidateMode,
                             hint: 'Password',
