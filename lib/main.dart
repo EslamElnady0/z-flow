@@ -11,6 +11,7 @@ import 'package:z_flow1/features/auth/presentaion/screens/login_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/password_recovery_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
+import 'package:z_flow1/features/auth/presentaion/screens/splash_screen.dart';
 import 'package:z_flow1/features/drawer/data/cubits/add%20target%20cubit/add_target_cubit.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_favourite_cubit.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20target%20cubit/get_target_cubit.dart';
@@ -23,10 +24,15 @@ import 'package:z_flow1/features/home/data/cubit/usage%20cubit/usage_cubit.dart'
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LocalNotifications.init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Hive.initFlutter();
   Hive.registerAdapter(TaskModelAdapter());
   Hive.registerAdapter(HabitModelAdapter());
@@ -79,7 +85,7 @@ class ZFlowApp extends StatelessWidget {
               HomeScreen.pageName: (context) => const HomeScreen(),
             },
             debugShowCheckedModeBanner: false,
-            home: const HomeScreen(),
+            home: const SplashScreen(),
           ),
         );
       }),

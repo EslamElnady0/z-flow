@@ -40,6 +40,9 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   device_apps: ^2.2.0
+  firebase_core: ^2.30.0
+  firebase_auth: ^4.19.2
+  cloud_firestore: ^4.17.0
   app_usage:
   intl: ^0.19.0
   table_calendar: ^3.0.9
@@ -47,7 +50,7 @@ dependencies:
   flutter_local_notifications: ^17.0.0
   flutter_timezone: ^1.0.8
   rxdart: ^0.27.7
-  workmanager: ^0.5.2
+  #workmanager: ^0.5.2
 
 dev_dependencies:
   build_runner: ^2.4.8

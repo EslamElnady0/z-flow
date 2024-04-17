@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
@@ -30,8 +31,8 @@ class AuthScreen extends StatelessWidget {
               Navigator.pushNamed(context, LogInScreen.pageName);
             },
           ),
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: 10.h,
           ),
           CustomAuthButton(
             title: "Sign up",
@@ -46,8 +47,8 @@ class AuthScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset("assets/images/google (2) 2.png"),
-              const SizedBox(
-                width: 20,
+              SizedBox(
+                width: 20.w,
               ),
               Image.asset("assets/images/_Group_2.png")
             ],
@@ -56,7 +57,7 @@ class AuthScreen extends StatelessWidget {
             flex: 2,
           ),
           Padding(
-              padding: const EdgeInsets.only(right: 10, bottom: 16),
+              padding: EdgeInsets.only(right: 10.w, bottom: 16.h),
               child: AuthBottomButtonForward(
                 onTap: () {
                   Navigator.pushReplacementNamed(context, HomeScreen.pageName);
