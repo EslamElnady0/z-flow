@@ -15,7 +15,6 @@ import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dar
 import 'package:z_flow1/features/home/presentation/widgets/add_task_textfield.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_check_box_container.dart';
-import 'package:z_flow1/features/home/presentation/widgets/custom_iteration_container.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
 class AddHabitForm extends StatefulWidget {
@@ -97,12 +96,6 @@ class _AddHabitFormState extends State<AddHabitForm> {
           BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
             return Column(
               children: [
-                // CustomIterationContainer(
-                //   habitModel: habitModel,
-                // ),
-                // SizedBox(
-                //   height: 24.h,
-                // ),
                 CustomCheckBoxContainer(
                   value: isIterable,
                   text: "تذكير بهذه العادة",
