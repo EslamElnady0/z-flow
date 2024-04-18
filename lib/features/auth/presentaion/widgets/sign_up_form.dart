@@ -163,7 +163,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       uid: firebaseAuthService.auth.currentUser!.uid,
                     );
                     await FirebaseFirestoreServices()
-                        .addUserToFirestore(userModel);
+                        .addUserToFirestore(userModel: userModel);
                   } else {
                     autoValidateMode = AutovalidateMode.always;
                     setState(() {});

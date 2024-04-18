@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
-
 import '../../../../core/services/firebase_auth.dart';
 import '../widgets/auth_bottom_screen_button.dart';
 import '../widgets/auth_screens_header.dart';
@@ -50,8 +49,13 @@ class AuthScreen extends StatelessWidget {
             children: [
               GestureDetector(
                   onTap: () async {
-                    await FireBaseAuthService()
-                        .signInWithGoogle(context: context);
+                    await FireBaseAuthService().signInWithGoogle(
+                      context: context,
+                    );
+                    if (context.mounted) {
+                      Navigator.pushReplacementNamed(
+                          context, MotivationSplashScreen.pageName);
+                    }
                   },
                   child: Image.asset("assets/images/google (2) 2.png")),
               SizedBox(

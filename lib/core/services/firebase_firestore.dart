@@ -10,7 +10,7 @@ class FirebaseFirestoreServices {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   //add new user data
-  addUserToFirestore(UserModel userModel) async {
+  addUserToFirestore({required UserModel userModel}) async {
     try {
       await firestore
           .collection("users")

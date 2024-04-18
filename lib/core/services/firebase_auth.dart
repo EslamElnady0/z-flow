@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:z_flow1/core/services/firebase_firestore.dart';
 import 'package:z_flow1/core/util/methods.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/auth_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
+
+import '../../features/auth/data/models/user_model.dart';
 
 class FireBaseAuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -93,10 +96,14 @@ class FireBaseAuthService {
     GoogleAuthProvider provider = GoogleAuthProvider();
     try {
       await FirebaseAuth.instance.signInWithProvider(provider);
-      if (context.mounted) {
-        Navigator.pushReplacementNamed(
-            context, MotivationSplashScreen.pageName);
-      }
+      FireBaseAuthService authService = FireBaseAuthService();
+
+      await FirebaseFirestoreServices().addUserToFirestore(
+          userModel: UserModel(
+              email: authService.auth.currentUser!.email!,
+              firstName: "",
+              lastName: "",
+              uid: authService.auth.currentUser!.uid));
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
         HelperMethods.showSnackBar(

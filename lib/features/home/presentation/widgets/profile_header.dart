@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:z_flow1/core/colors/colorrs.dart';
-import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/services/firebase_auth.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/login_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_auth_button.dart';
+import 'package:z_flow1/features/home/presentation/widgets/google_registration_button.dart';
 
 import '../../../auth/presentaion/screens/signup_screen.dart';
 
-class ProfileHeader extends StatelessWidget {
+class ProfileHeader extends StatefulWidget {
   const ProfileHeader({
     super.key,
   });
 
+  @override
+  State<ProfileHeader> createState() => _ProfileHeaderState();
+}
+
+class _ProfileHeaderState extends State<ProfileHeader> {
   @override
   Widget build(BuildContext context) {
     FireBaseAuthService firebaseAuthService = FireBaseAuthService();
@@ -57,36 +61,14 @@ class ProfileHeader extends StatelessWidget {
                   SizedBox(
                     height: 16.h,
                   ),
-                  Container(
-                    width: 219.w,
-                    height: 37.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.r),
-                        color: Colorrs.kCyan,
-                        boxShadow: [Constants.shadow]),
-                    child: Row(
-                      children: [
-                        const Spacer(
-                          flex: 5,
-                        ),
-                        Image.asset(
-                          "assets/images/google (2) 2.png",
-                          height: 24.h,
-                          width: 24.w,
-                        ),
-                        const Spacer(
-                          flex: 4,
-                        ),
-                        Text(
-                          "تسجيل الدخول بجوجل",
-                          style:
-                              Styles.style16Bold.copyWith(color: Colors.white),
-                        ),
-                        const Spacer(
-                          flex: 5,
-                        )
-                      ],
-                    ),
+                  GoogleRegistrationButton(
+                    onTap: () async {
+                      await FireBaseAuthService()
+                          .signInWithGoogle(context: context);
+                      if (!firebaseAuthService.auth.currentUser!.isAnonymous) {
+                        setState(() {});
+                      }
+                    },
                   ),
                 ],
               )
