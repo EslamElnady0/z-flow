@@ -54,10 +54,6 @@ class FireBaseAuthService {
         email: email,
         password: password,
       );
-      if (context.mounted) {
-        Navigator.pushReplacementNamed(
-            context, MotivationSplashScreen.pageName);
-      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
         if (context.mounted) {

@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:z_flow1/features/drawer/data/cubits/get%20target%20cubit/get_target_cubit.dart';
+import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
+import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/presentation/screens/account_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/date_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/habits%20screens/habits_screen.dart';
@@ -14,8 +17,6 @@ import 'package:z_flow1/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_bottom_nav_bar.dart';
 import 'package:z_flow1/features/drawer/presentation/widgets/custom_drawer.dart';
 
-bool hasInternet = false;
-
 class HomeScreen extends StatefulWidget {
   static String pageName = 'homeScreen';
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,6 +26,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool hasInternet = false;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription internetSubscription;
 
@@ -35,6 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   @override
   void initState() {
+    context.read<GetTaskCubit>().getTasks();
+    context.read<GetTaskCubit>().getSpecificDayTasks(DateTime.now());
+    context.read<GetHabitCubit>().getHabits();
+    context.read<GetTargetCubit>().getTargets();
     internetSubscription =
         InternetConnectionChecker().onStatusChange.listen((status) {
       final hasInternetConnection =
@@ -44,6 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    internetSubscription.cancel();
+    super.dispose();
   }
 
   @override

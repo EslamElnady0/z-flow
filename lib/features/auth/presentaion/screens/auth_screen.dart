@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:z_flow1/core/util/methods.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/signup_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
@@ -53,6 +53,7 @@ class AuthScreen extends StatelessWidget {
                       context: context,
                     );
                     if (context.mounted) {
+                      HelperMethods.clearAllLists(context);
                       Navigator.pushReplacementNamed(
                           context, MotivationSplashScreen.pageName);
                     }

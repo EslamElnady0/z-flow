@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
@@ -15,11 +18,36 @@ import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.
 
 import '../../../../core/services/firebase_auth.dart';
 import '../../../../core/services/firebase_firestore.dart';
-import '../screens/home_screen.dart';
 
-class TaskItem extends StatelessWidget {
+class TaskItem extends StatefulWidget {
   final TaskModel taskModel;
   const TaskItem({super.key, required this.taskModel});
+
+  @override
+  State<TaskItem> createState() => _TaskItemState();
+}
+
+class _TaskItemState extends State<TaskItem> {
+  late StreamSubscription internetSubscription;
+  bool hasInternet = false;
+  @override
+  void initState() {
+    internetSubscription =
+        InternetConnectionChecker().onStatusChange.listen((status) {
+      final hasInternetConnection =
+          status == InternetConnectionStatus.connected;
+      setState(() {
+        hasInternet = hasInternetConnection;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    internetSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +58,15 @@ class TaskItem extends StatelessWidget {
           BlocBuilder<GetTaskCubit, GetTaskState>(
             builder: (context, state) {
               return CustomCheckBox(
-                value: taskModel.isDone,
+                value: widget.taskModel.isDone,
                 onChanged: (value) async {
-                  taskModel.isDone = !(taskModel.isDone);
-                  if (taskModel.isDone) {
+                  widget.taskModel.isDone = !(widget.taskModel.isDone);
+                  if (widget.taskModel.isDone) {
                     context
                         .read<GetTaskCubit>()
                         .runningTasksList
-                        .remove(taskModel);
-                    if (!taskModel.isDoneBefore) {
+                        .remove(widget.taskModel);
+                    if (!widget.taskModel.isDoneBefore) {
                       showAnimatedDialog(context);
                       incrementPoints();
                     }
@@ -46,10 +74,10 @@ class TaskItem extends StatelessWidget {
                     context
                         .read<GetTaskCubit>()
                         .completedTasksList
-                        .remove(taskModel);
+                        .remove(widget.taskModel);
                   }
-                  taskModel.isDoneBefore = true;
-                  taskModel.save();
+                  widget.taskModel.isDoneBefore = true;
+                  widget.taskModel.save();
                   context.read<GetTaskCubit>().getTasks();
                   FirebaseFirestoreServices firestoreServices =
                       FirebaseFirestoreServices();
@@ -58,7 +86,7 @@ class TaskItem extends StatelessWidget {
                   String uid = fireBaseAuthService.auth.currentUser!.uid;
                   if (hasInternet) {
                     await firestoreServices.editTaskInFirestore(
-                        taskModel: taskModel, uid: uid);
+                        taskModel: widget.taskModel, uid: uid);
                   }
                 },
               );
@@ -81,7 +109,7 @@ class TaskItem extends StatelessWidget {
                 SizedBox(
                     width: 200.w,
                     child: Text(
-                      taskModel.title,
+                      widget.taskModel.title,
                       style: Styles.style16,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -98,12 +126,13 @@ class TaskItem extends StatelessWidget {
                       return [
                         PopupMenuItem(
                             onTap: () async {
-                              taskModel.isFavourited = !taskModel.isFavourited;
-                              taskModel.save();
+                              widget.taskModel.isFavourited =
+                                  !widget.taskModel.isFavourited;
+                              widget.taskModel.save();
                               context
                                   .read<GetFavouriteCubit>()
                                   .favouriteTasksList
-                                  .remove(taskModel);
+                                  .remove(widget.taskModel);
                               context
                                   .read<GetFavouriteCubit>()
                                   .getFavouriteTasks();
@@ -115,12 +144,12 @@ class TaskItem extends StatelessWidget {
                                   fireBaseAuthService.auth.currentUser!.uid;
                               if (hasInternet) {
                                 await firestoreServices.editTaskInFirestore(
-                                    taskModel: taskModel, uid: uid);
+                                    taskModel: widget.taskModel, uid: uid);
                               }
                             },
                             child: CustomPopUpMenuItem(
                               title: "المفضلة",
-                              icon: taskModel.isFavourited
+                              icon: widget.taskModel.isFavourited
                                   ? FontAwesomeIcons.solidStar
                                   : FontAwesomeIcons.star,
                             )),
@@ -128,7 +157,7 @@ class TaskItem extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => EditTaskScreen(
-                                        taskModel: taskModel,
+                                        taskModel: widget.taskModel,
                                       )));
                             },
                             child: const CustomPopUpMenuItem(
@@ -144,24 +173,24 @@ class TaskItem extends StatelessWidget {
                                   fireBaseAuthService.auth.currentUser!.uid;
                               if (hasInternet) {
                                 await firestoreServices.deleteTaskFromFirestore(
-                                    taskModel: taskModel, uid: uid);
+                                    taskModel: widget.taskModel, uid: uid);
                               }
-                              taskModel.delete();
+                              widget.taskModel.delete();
                               if (context.mounted) {
                                 context
                                     .read<GetFavouriteCubit>()
                                     .favouriteTasksList
-                                    .remove(taskModel);
+                                    .remove(widget.taskModel);
 
                                 context
                                     .read<GetTaskCubit>()
                                     .completedTasksList
-                                    .remove(taskModel);
+                                    .remove(widget.taskModel);
 
                                 context
                                     .read<GetTaskCubit>()
                                     .runningTasksList
-                                    .remove(taskModel);
+                                    .remove(widget.taskModel);
 
                                 context.read<GetTaskCubit>().getTasks();
                                 context

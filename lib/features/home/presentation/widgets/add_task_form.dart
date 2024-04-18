@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
@@ -13,7 +16,6 @@ import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/add%20task%20cubit/add_task_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
-import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/add_task_textfield.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
@@ -37,6 +39,27 @@ class AddTaskForm extends StatefulWidget {
 }
 
 class _AddTaskFormState extends State<AddTaskForm> {
+  bool hasInternet = false;
+  late StreamSubscription internetSubscription;
+  @override
+  void initState() {
+    internetSubscription =
+        InternetConnectionChecker().onStatusChange.listen((status) {
+      final hasInternetConnection =
+          status == InternetConnectionStatus.connected;
+      setState(() {
+        hasInternet = hasInternetConnection;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    internetSubscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var box = Hive.box(Constants.constsBox);
@@ -141,14 +164,11 @@ class _AddTaskFormState extends State<AddTaskForm> {
                         );
                     incrementNotificationId();
                     context.read<GetTaskCubit>().getTasks();
+                    Navigator.pop(context);
 
                     if (hasInternet) {
                       await firestoreServices.addTaskToFirestore(
                           taskModel: taskModel, uid: uid);
-                    }
-
-                    if (context.mounted) {
-                      Navigator.pop(context);
                     }
                   }
                 },

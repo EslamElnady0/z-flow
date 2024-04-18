@@ -55,21 +55,16 @@ class ZFlowApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => AddTaskCubit()),
-            BlocProvider(
-                create: (context) => GetTaskCubit()
-                  ..getTasks()
-                  ..getSpecificDayTasks(
-                    DateTime.now(),
-                  )),
+            BlocProvider(create: (context) => GetTaskCubit()),
             BlocProvider(
                 create: (context) => GetFavouriteCubit()
                   ..getFavouriteTasks()
                   ..getFavouriteHabits()),
             BlocProvider(create: (context) => AddHabitCubit()),
-            BlocProvider(create: (context) => GetHabitCubit()..getHabits()),
+            BlocProvider(create: (context) => GetHabitCubit()),
             BlocProvider(create: (context) => AddTargetCubit()),
             BlocProvider(create: (context) => UsageCubit()),
-            BlocProvider(create: (context) => GetTargetCubit()..getTargets()),
+            BlocProvider(create: (context) => GetTargetCubit()),
           ],
           child: MaterialApp(
               locale: const Locale("en-US"),

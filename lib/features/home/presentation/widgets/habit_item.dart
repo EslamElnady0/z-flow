@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
@@ -9,7 +12,6 @@ import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/habits%20screens/edit_habit_screen.dart';
-import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
 import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
 import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
@@ -18,9 +20,35 @@ import '../../../../core/services/firebase_auth.dart';
 import '../../../../core/services/firebase_firestore.dart';
 import '../../../../core/services/local_notifications.dart';
 
-class HabitItem extends StatelessWidget {
+class HabitItem extends StatefulWidget {
   final HabitModel habitModel;
   const HabitItem({super.key, required this.habitModel});
+
+  @override
+  State<HabitItem> createState() => _HabitItemState();
+}
+
+class _HabitItemState extends State<HabitItem> {
+  late StreamSubscription internetSubscription;
+  bool hasInternet = false;
+  @override
+  void initState() {
+    internetSubscription =
+        InternetConnectionChecker().onStatusChange.listen((status) {
+      final hasInternetConnection =
+          status == InternetConnectionStatus.connected;
+      setState(() {
+        hasInternet = hasInternetConnection;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    internetSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +58,19 @@ class HabitItem extends StatelessWidget {
         children: [
           BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
             return CustomCheckBox(
-              value: habitModel.isDone,
+              value: widget.habitModel.isDone,
               onChanged: (value) async {
                 FirebaseFirestoreServices firestoreServices =
                     FirebaseFirestoreServices();
                 FireBaseAuthService fireBaseAuthService = FireBaseAuthService();
                 String uid = fireBaseAuthService.auth.currentUser!.uid;
-                habitModel.isDone = !(habitModel.isDone);
-                if (habitModel.isDone) {
+                widget.habitModel.isDone = !(widget.habitModel.isDone);
+                if (widget.habitModel.isDone) {
                   context
                       .read<GetHabitCubit>()
                       .runningHabitsList
-                      .remove(habitModel);
-                  if (!habitModel.isDoneBefore) {
+                      .remove(widget.habitModel);
+                  if (!widget.habitModel.isDoneBefore) {
                     showAnimatedDialog(context);
                     incrementPoints();
                   }
@@ -50,13 +78,13 @@ class HabitItem extends StatelessWidget {
                   context
                       .read<GetHabitCubit>()
                       .completedHabitsList
-                      .remove(habitModel);
+                      .remove(widget.habitModel);
                 }
-                habitModel.isDoneBefore = true;
-                habitModel.save();
+                widget.habitModel.isDoneBefore = true;
+                widget.habitModel.save();
                 if (hasInternet) {
                   firestoreServices.editHabitInFirestore(
-                      habitModel: habitModel, uid: uid);
+                      habitModel: widget.habitModel, uid: uid);
                 }
                 context.read<GetHabitCubit>().getHabits();
               },
@@ -79,7 +107,7 @@ class HabitItem extends StatelessWidget {
                 SizedBox(
                     width: 200.w,
                     child: Text(
-                      habitModel.title,
+                      widget.habitModel.title,
                       style: Styles.style16,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -102,18 +130,18 @@ class HabitItem extends StatelessWidget {
                                   FireBaseAuthService();
                               String uid =
                                   fireBaseAuthService.auth.currentUser!.uid;
-                              habitModel.isFavourited =
-                                  !habitModel.isFavourited;
-                              habitModel.save();
+                              widget.habitModel.isFavourited =
+                                  !widget.habitModel.isFavourited;
+                              widget.habitModel.save();
                               if (hasInternet) {
                                 await firestoreServices.editHabitInFirestore(
-                                    habitModel: habitModel, uid: uid);
+                                    habitModel: widget.habitModel, uid: uid);
                               }
                               if (context.mounted) {
                                 context
                                     .read<GetFavouriteCubit>()
                                     .favouriteHabitsList
-                                    .remove(habitModel);
+                                    .remove(widget.habitModel);
                                 context
                                     .read<GetFavouriteCubit>()
                                     .getFavouriteHabits();
@@ -121,7 +149,7 @@ class HabitItem extends StatelessWidget {
                             },
                             child: CustomPopUpMenuItem(
                               title: "المفضلة",
-                              icon: habitModel.isFavourited
+                              icon: widget.habitModel.isFavourited
                                   ? FontAwesomeIcons.solidStar
                                   : FontAwesomeIcons.star,
                             )),
@@ -131,7 +159,7 @@ class HabitItem extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => EditHabitScreen(
-                                          habitModel: habitModel)));
+                                          habitModel: widget.habitModel)));
                             },
                             child: const CustomPopUpMenuItem(
                                 title: "تعديل",
@@ -146,28 +174,28 @@ class HabitItem extends StatelessWidget {
                                   fireBaseAuthService.auth.currentUser!.uid;
                               if (hasInternet) {
                                 firestoreServices.deleteHabitFromFirestore(
-                                    habitModel: habitModel, uid: uid);
+                                    habitModel: widget.habitModel, uid: uid);
                               }
-                              habitModel.delete();
+                              widget.habitModel.delete();
                               context
                                   .read<GetFavouriteCubit>()
                                   .favouriteHabitsList
-                                  .remove(habitModel);
+                                  .remove(widget.habitModel);
                               context
                                   .read<GetHabitCubit>()
                                   .runningHabitsList
-                                  .remove(habitModel);
+                                  .remove(widget.habitModel);
                               context
                                   .read<GetHabitCubit>()
                                   .completedHabitsList
-                                  .remove(habitModel);
+                                  .remove(widget.habitModel);
                               context.read<GetHabitCubit>().getHabits();
 
                               context
                                   .read<GetFavouriteCubit>()
                                   .getFavouriteHabits();
                               LocalNotifications.cancelNotification(
-                                  id: habitModel.id);
+                                  id: widget.habitModel.id);
                             },
                             child: const CustomPopUpMenuItem(
                               title: "حذف",

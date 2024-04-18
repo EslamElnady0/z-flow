@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:z_flow1/core/services/firebase_auth.dart';
+import 'package:z_flow1/core/util/methods.dart';
+import 'package:z_flow1/features/auth/presentaion/screens/motavation_splash_screen.dart';
 import 'package:z_flow1/features/auth/presentaion/screens/password_recovery_screen.dart';
 import 'package:z_flow1/core/util/context_helpers.dart';
 
@@ -24,6 +26,7 @@ class _LogInScreenState extends State<LogInScreen> {
   GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
   bool isPassword = true;
+
   @override
   void initState() {
     emailController = TextEditingController();
@@ -128,6 +131,15 @@ class _LogInScreenState extends State<LogInScreen> {
                                             email: emailController.text,
                                             password: passwordController.text,
                                             context: context);
+
+                                    if (context.mounted) {
+                                      HelperMethods.clearAllLists(context);
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        MotivationSplashScreen.pageName,
+                                        (route) => false,
+                                      );
+                                    }
                                   } else {
                                     autoValidateMode = AutovalidateMode.always;
                                     setState(() {});

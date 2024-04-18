@@ -1,11 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20target%20cubit/get_target_cubit.dart';
 import 'package:z_flow1/features/drawer/data/models/target%20model/target_model.dart';
 import 'package:z_flow1/features/drawer/presentation/widgets/add_target_textfield.dart';
-import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
@@ -22,17 +24,28 @@ class EditTargetScreen extends StatefulWidget {
 }
 
 class _EditTargetScreenState extends State<EditTargetScreen> {
+  late StreamSubscription internetSubscription;
+  bool hasInternet = false;
   late TextEditingController _targetController;
   var formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _targetController = TextEditingController(text: widget.targetModel.title);
+    internetSubscription =
+        InternetConnectionChecker().onStatusChange.listen((status) {
+      final hasInternetConnection =
+          status == InternetConnectionStatus.connected;
+      setState(() {
+        hasInternet = hasInternetConnection;
+      });
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     _targetController.dispose();
+    internetSubscription.cancel();
     super.dispose();
   }
 

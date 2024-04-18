@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:z_flow1/core/services/firebase_auth.dart';
 import 'package:z_flow1/core/services/firebase_firestore.dart';
 import 'package:z_flow1/core/util/context_helpers.dart';
+import 'package:z_flow1/core/util/methods.dart';
 import 'package:z_flow1/features/auth/presentaion/widgets/custom_auth_button.dart';
 import 'package:z_flow1/features/auth/presentaion/widgets/custom_textformfield.dart';
 
@@ -151,7 +152,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   if (widget.formKey.currentState!.validate()) {
                     FireBaseAuthService firebaseAuthService =
                         FireBaseAuthService();
-
+                    HelperMethods.clearAllLists(context);
                     await firebaseAuthService.signUpWithNormalEmail(
                         email: widget.emailController.text,
                         password: widget.passwordController.text,

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
@@ -19,7 +22,6 @@ import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dar
 
 import '../../../../core/services/firebase_auth.dart';
 import '../../../../core/services/firebase_firestore.dart';
-import '../screens/home_screen.dart';
 
 class AddHabitForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -38,12 +40,28 @@ class AddHabitForm extends StatefulWidget {
 }
 
 class _AddHabitFormState extends State<AddHabitForm> {
+  bool hasInternet = false;
+  late StreamSubscription internetSubscription;
   bool isIterable = false;
   late HabitModel habitModel;
   @override
   void initState() {
     habitModel = HabitModel();
+    internetSubscription =
+        InternetConnectionChecker().onStatusChange.listen((status) {
+      final hasInternetConnection =
+          status == InternetConnectionStatus.connected;
+      setState(() {
+        hasInternet = hasInternetConnection;
+      });
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    internetSubscription.cancel();
+    super.dispose();
   }
 
   @override
