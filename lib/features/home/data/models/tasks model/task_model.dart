@@ -33,4 +33,18 @@ class TaskModel extends HiveObject {
       required this.deadline,
       this.isFavourited = false,
       this.isDone = false});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'notes': notes,
+      'createdAt': createdAt,
+      'deadline': deadline,
+      'sideTask': sideTask,
+      'isFavourited': isFavourited,
+      'isDone': isDone,
+      'isDoneBefore': isDoneBefore,
+      'id': id
+    };
+  }
 }

@@ -14,6 +14,10 @@ import 'package:z_flow1/features/home/presentation/widgets/custom_check_box_cont
 import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
+import '../../../../core/services/firebase_auth.dart';
+import '../../../../core/services/firebase_firestore.dart';
+import '../screens/home_screen.dart';
+
 class EditTaskForm extends StatefulWidget {
   final TaskModel taskModel;
   final GlobalKey<FormState> formKey;
@@ -145,8 +149,13 @@ class _EditTaskFormState extends State<EditTaskForm> {
               CustomCancelSaveButton(
                 color: Colorrs.kCyan,
                 text: 'حفظ',
-                onTap: () {
+                onTap: () async {
                   if (widget.formKey.currentState!.validate()) {
+                    FirebaseFirestoreServices firestoreServices =
+                        FirebaseFirestoreServices();
+                    FireBaseAuthService fireBaseAuthService =
+                        FireBaseAuthService();
+                    String uid = fireBaseAuthService.auth.currentUser!.uid;
                     widget.taskModel.title = widget.taskController.text;
                     widget.taskModel.deadline = widget.deadlineController.text;
                     widget.taskModel.notes = widget.notesController.text;
@@ -154,12 +163,18 @@ class _EditTaskFormState extends State<EditTaskForm> {
                     widget.formKey.currentState!.save();
                     widget.taskModel.save();
                     context.read<GetTaskCubit>().getTasks();
-                    Navigator.pop(context);
-                    if (!widget.taskModel.isDoneBefore &&
-                        widget.taskModel.isDone) {
-                      showAnimatedDialog(context);
-                      incrementPoints();
-                      widget.taskModel.isDoneBefore = true;
+                    if (hasInternet) {
+                      await firestoreServices.editTaskInFirestore(
+                          taskModel: widget.taskModel, uid: uid);
+                    }
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                      if (!widget.taskModel.isDoneBefore &&
+                          widget.taskModel.isDone) {
+                        showAnimatedDialog(context);
+                        incrementPoints();
+                        widget.taskModel.isDoneBefore = true;
+                      }
                     }
                   }
                 },

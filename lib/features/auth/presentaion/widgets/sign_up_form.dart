@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:z_flow1/core/services/firebase_auth.dart';
+import 'package:z_flow1/core/services/firebase_firestore.dart';
 import 'package:z_flow1/core/util/context_helpers.dart';
 import 'package:z_flow1/features/auth/presentaion/widgets/custom_auth_button.dart';
 import 'package:z_flow1/features/auth/presentaion/widgets/custom_textformfield.dart';
+
+import '../../data/models/user_model.dart';
 
 class SignUpForm extends StatefulWidget {
   final TextEditingController firstNameController;
@@ -146,10 +149,21 @@ class _SignUpFormState extends State<SignUpForm> {
                 title: "Sign up",
                 onTap: () async {
                   if (widget.formKey.currentState!.validate()) {
-                    await FireBaseAuthService().signUpWithNormalEmail(
+                    FireBaseAuthService firebaseAuthService =
+                        FireBaseAuthService();
+
+                    await firebaseAuthService.signUpWithNormalEmail(
                         email: widget.emailController.text,
                         password: widget.passwordController.text,
                         context: context);
+                    UserModel userModel = UserModel(
+                      firstName: widget.firstNameController.text,
+                      lastName: widget.lastNameController.text,
+                      email: widget.emailController.text,
+                      uid: firebaseAuthService.auth.currentUser!.uid,
+                    );
+                    await FirebaseFirestoreServices()
+                        .addUserToFirestore(userModel);
                   } else {
                     autoValidateMode = AutovalidateMode.always;
                     setState(() {});

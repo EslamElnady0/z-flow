@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,11 +6,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
+import 'package:z_flow1/core/services/firebase_auth.dart';
+import 'package:z_flow1/core/services/firebase_firestore.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/add%20task%20cubit/add_task_cubit.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20task%20cubit/get_task_cubit.dart';
 import 'package:z_flow1/features/home/data/models/tasks%20model/task_model.dart';
+import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/add_task_textfield.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
@@ -119,8 +120,13 @@ class _AddTaskFormState extends State<AddTaskForm> {
               CustomCancelSaveButton(
                 color: Colorrs.kCyan,
                 text: 'حفظ',
-                onTap: () {
+                onTap: () async {
                   if (widget.formKey.currentState!.validate()) {
+                    FirebaseFirestoreServices firestoreServices =
+                        FirebaseFirestoreServices();
+                    FireBaseAuthService fireBaseAuthService =
+                        FireBaseAuthService();
+                    String uid = fireBaseAuthService.auth.currentUser!.uid;
                     widget.formKey.currentState!.save();
                     var taskModel = TaskModel(
                         id: id,
@@ -135,8 +141,15 @@ class _AddTaskFormState extends State<AddTaskForm> {
                         );
                     incrementNotificationId();
                     context.read<GetTaskCubit>().getTasks();
-                    Navigator.pop(context);
-                    log(id.toString());
+
+                    if (hasInternet) {
+                      await firestoreServices.addTaskToFirestore(
+                          taskModel: taskModel, uid: uid);
+                    }
+
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
                   }
                 },
               ),

@@ -13,6 +13,10 @@ import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_it
 import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
 import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 
+import '../../../../core/services/firebase_auth.dart';
+import '../../../../core/services/firebase_firestore.dart';
+import '../screens/home_screen.dart';
+
 class TaskItem extends StatelessWidget {
   final TaskModel taskModel;
   const TaskItem({super.key, required this.taskModel});
@@ -27,7 +31,7 @@ class TaskItem extends StatelessWidget {
             builder: (context, state) {
               return CustomCheckBox(
                 value: taskModel.isDone,
-                onChanged: (value) {
+                onChanged: (value) async {
                   taskModel.isDone = !(taskModel.isDone);
                   if (taskModel.isDone) {
                     context
@@ -47,6 +51,15 @@ class TaskItem extends StatelessWidget {
                   taskModel.isDoneBefore = true;
                   taskModel.save();
                   context.read<GetTaskCubit>().getTasks();
+                  FirebaseFirestoreServices firestoreServices =
+                      FirebaseFirestoreServices();
+                  FireBaseAuthService fireBaseAuthService =
+                      FireBaseAuthService();
+                  String uid = fireBaseAuthService.auth.currentUser!.uid;
+                  if (hasInternet) {
+                    await firestoreServices.editTaskInFirestore(
+                        taskModel: taskModel, uid: uid);
+                  }
                 },
               );
             },
@@ -84,7 +97,7 @@ class TaskItem extends StatelessWidget {
                     itemBuilder: (context) {
                       return [
                         PopupMenuItem(
-                            onTap: () {
+                            onTap: () async {
                               taskModel.isFavourited = !taskModel.isFavourited;
                               taskModel.save();
                               context
@@ -94,6 +107,16 @@ class TaskItem extends StatelessWidget {
                               context
                                   .read<GetFavouriteCubit>()
                                   .getFavouriteTasks();
+                              FirebaseFirestoreServices firestoreServices =
+                                  FirebaseFirestoreServices();
+                              FireBaseAuthService fireBaseAuthService =
+                                  FireBaseAuthService();
+                              String uid =
+                                  fireBaseAuthService.auth.currentUser!.uid;
+                              if (hasInternet) {
+                                await firestoreServices.editTaskInFirestore(
+                                    taskModel: taskModel, uid: uid);
+                              }
                             },
                             child: CustomPopUpMenuItem(
                               title: "المفضلة",
@@ -112,27 +135,39 @@ class TaskItem extends StatelessWidget {
                                 title: "تعديل",
                                 icon: FontAwesomeIcons.penToSquare)),
                         PopupMenuItem(
-                            onTap: () {
+                            onTap: () async {
+                              FirebaseFirestoreServices firestoreServices =
+                                  FirebaseFirestoreServices();
+                              FireBaseAuthService fireBaseAuthService =
+                                  FireBaseAuthService();
+                              String uid =
+                                  fireBaseAuthService.auth.currentUser!.uid;
+                              if (hasInternet) {
+                                await firestoreServices.deleteTaskFromFirestore(
+                                    taskModel: taskModel, uid: uid);
+                              }
                               taskModel.delete();
-                              context
-                                  .read<GetFavouriteCubit>()
-                                  .favouriteTasksList
-                                  .remove(taskModel);
+                              if (context.mounted) {
+                                context
+                                    .read<GetFavouriteCubit>()
+                                    .favouriteTasksList
+                                    .remove(taskModel);
 
-                              context
-                                  .read<GetTaskCubit>()
-                                  .completedTasksList
-                                  .remove(taskModel);
+                                context
+                                    .read<GetTaskCubit>()
+                                    .completedTasksList
+                                    .remove(taskModel);
 
-                              context
-                                  .read<GetTaskCubit>()
-                                  .runningTasksList
-                                  .remove(taskModel);
+                                context
+                                    .read<GetTaskCubit>()
+                                    .runningTasksList
+                                    .remove(taskModel);
 
-                              context.read<GetTaskCubit>().getTasks();
-                              context
-                                  .read<GetFavouriteCubit>()
-                                  .getFavouriteTasks();
+                                context.read<GetTaskCubit>().getTasks();
+                                context
+                                    .read<GetFavouriteCubit>()
+                                    .getFavouriteTasks();
+                              }
                             },
                             child: const CustomPopUpMenuItem(
                               title: "حذف",

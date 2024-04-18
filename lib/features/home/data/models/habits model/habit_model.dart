@@ -33,4 +33,18 @@ class HabitModel extends HiveObject {
       this.isDone = false,
       this.isDoneBefore = false,
       this.id = 0});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'deadline': deadline,
+      'createdAt': createdAt,
+      'iteration': iteration,
+      'isFavourited': isFavourited,
+      'isIterable': isIterable,
+      'isDone': isDone,
+      'isDoneBefore': isDoneBefore,
+      'id': id
+    };
+  }
 }

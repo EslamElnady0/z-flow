@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:z_flow1/features/home/presentation/screens/account_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/date_screen.dart';
 import 'package:z_flow1/features/home/presentation/screens/habits%20screens/habits_screen.dart';
@@ -11,6 +13,8 @@ import 'package:z_flow1/features/home/presentation/ui%20cubits/cubit/bottom_nav_
 import 'package:z_flow1/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_bottom_nav_bar.dart';
 import 'package:z_flow1/features/drawer/presentation/widgets/custom_drawer.dart';
+
+bool hasInternet = false;
 
 class HomeScreen extends StatefulWidget {
   static String pageName = 'homeScreen';
@@ -22,12 +26,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late StreamSubscription internetSubscription;
 
   void openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
 
   int currentIndex = 0;
+  @override
+  void initState() {
+    internetSubscription =
+        InternetConnectionChecker().onStatusChange.listen((status) {
+      final hasInternetConnection =
+          status == InternetConnectionStatus.connected;
+      setState(() {
+        hasInternet = hasInternetConnection;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
