@@ -85,6 +85,32 @@ class LocalNotifications {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         id, title, body, scheduledDate, notificationDetails,
         payload: payload,
+        matchDateTimeComponents: DateTimeComponents.dateAndTime,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+  }
+
+  //TODO : CHECK THIS FUNC IS WORKING
+  static Future showDailyNotificationAt10AM(
+      {required String title,
+      required String body,
+      required String payload,
+      required int id}) async {
+    final tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local,
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 10);
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('channel 4', 'your channel name',
+            channelDescription: 'your channel description',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+    );
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        id, title, body, scheduledDate, notificationDetails,
+        payload: payload,
         matchDateTimeComponents: DateTimeComponents.time,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
