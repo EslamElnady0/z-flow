@@ -11,6 +11,8 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
+  //bool hasInternet = false;
+  // late StreamSubscription internetSubscription;
   late TextEditingController _taskController;
   late TextEditingController _deadlineController;
   late TextEditingController _notesController;
@@ -22,6 +24,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     _deadlineController = TextEditingController();
     _notesController = TextEditingController();
     _sideTaskController = TextEditingController();
+
+    // internetSubscription =
+    //     InternetConnectionChecker().onStatusChange.listen((status) {
+    //   final hasInternetConnection =
+    //       status == InternetConnectionStatus.connected;
+    //   setState(() {
+    //     hasInternet = hasInternetConnection;
+    //   });
+    // });
     super.initState();
   }
 
@@ -50,6 +61,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 SliverFillRemaining(
                   hasScrollBody: false,
                   child: AddTaskForm(
+                      //  hasInternet: hasInternet,
+                      // internetSubscription: internetSubscription,
                       formKey: formKey,
                       taskController: _taskController,
                       deadlineController: _deadlineController,

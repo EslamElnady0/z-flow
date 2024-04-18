@@ -48,16 +48,17 @@ class _HomeScreenState extends State<HomeScreen> {
           status == InternetConnectionStatus.connected;
       setState(() {
         hasInternet = hasInternetConnection;
+        print("has internet: $hasInternet");
       });
     });
     super.initState();
   }
 
   @override
-  void dispose() {
-    internetSubscription.cancel();
-    super.dispose();
-  }
+  // void dispose() {
+  //   internetSubscription.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

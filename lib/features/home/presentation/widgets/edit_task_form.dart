@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/styles/styles.dart';
@@ -41,27 +38,6 @@ class EditTaskForm extends StatefulWidget {
 }
 
 class _EditTaskFormState extends State<EditTaskForm> {
-  late StreamSubscription internetSubscription;
-  bool hasInternet = false;
-  @override
-  void initState() {
-    internetSubscription =
-        InternetConnectionChecker().onStatusChange.listen((status) {
-      final hasInternetConnection =
-          status == InternetConnectionStatus.connected;
-      setState(() {
-        hasInternet = hasInternetConnection;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    internetSubscription.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -167,10 +143,10 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   FireBaseAuthService fireBaseAuthService =
                       FireBaseAuthService();
                   String uid = fireBaseAuthService.auth.currentUser!.uid;
-                  if (hasInternet) {
-                    firestoreServices.deleteTaskFromFirestore(
-                        taskModel: widget.taskModel, uid: uid);
-                  }
+                  // if (hasInternet) {
+                  firestoreServices.deleteTaskFromFirestore(
+                      taskModel: widget.taskModel, uid: uid);
+                  //   }
                   widget.taskModel.delete();
                   context.read<GetTaskCubit>().getTasks();
                   Navigator.pop(context);
@@ -194,10 +170,10 @@ class _EditTaskFormState extends State<EditTaskForm> {
                     widget.formKey.currentState!.save();
                     widget.taskModel.save();
                     context.read<GetTaskCubit>().getTasks();
-                    if (hasInternet) {
-                      await firestoreServices.editTaskInFirestore(
-                          taskModel: widget.taskModel, uid: uid);
-                    }
+                    //    if (hasInternet) {
+                    await firestoreServices.editTaskInFirestore(
+                        taskModel: widget.taskModel, uid: uid);
+                    //   }
                     if (context.mounted) {
                       Navigator.pop(context);
                       if (!widget.taskModel.isDoneBefore &&

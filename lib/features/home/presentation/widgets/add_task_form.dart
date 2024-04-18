@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
@@ -26,8 +23,12 @@ class AddTaskForm extends StatefulWidget {
   final TextEditingController deadlineController;
   final TextEditingController notesController;
   final TextEditingController sideTaskController;
+  // bool hasInternet;
+  // StreamSubscription internetSubscription;
   const AddTaskForm(
       {super.key,
+      // required this.hasInternet,
+      //  required this.internetSubscription,
       required this.formKey,
       required this.taskController,
       required this.deadlineController,
@@ -39,26 +40,24 @@ class AddTaskForm extends StatefulWidget {
 }
 
 class _AddTaskFormState extends State<AddTaskForm> {
-  bool hasInternet = false;
-  late StreamSubscription internetSubscription;
-  @override
-  void initState() {
-    internetSubscription =
-        InternetConnectionChecker().onStatusChange.listen((status) {
-      final hasInternetConnection =
-          status == InternetConnectionStatus.connected;
-      setState(() {
-        hasInternet = hasInternetConnection;
-      });
-    });
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   widget.internetSubscription =
+  //       InternetConnectionChecker().onStatusChange.listen((status) {
+  //     final hasInternetConnection =
+  //         status == InternetConnectionStatus.connected;
+  //     setState(() {
+  //       widget.hasInternet = hasInternetConnection;
+  //     });
+  //   });
+  //   super.initState();
+  // }
 
-  @override
-  void dispose() {
-    internetSubscription.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   internetSubscription.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -166,10 +165,10 @@ class _AddTaskFormState extends State<AddTaskForm> {
                     context.read<GetTaskCubit>().getTasks();
                     Navigator.pop(context);
 
-                    if (hasInternet) {
-                      await firestoreServices.addTaskToFirestore(
-                          taskModel: taskModel, uid: uid);
-                    }
+                    // if (hasInternet) {
+                    await firestoreServices.addTaskToFirestore(
+                        taskModel: taskModel, uid: uid);
+                    // }
                   }
                 },
               ),

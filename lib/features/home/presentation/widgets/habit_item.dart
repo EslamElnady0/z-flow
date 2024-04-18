@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:z_flow1/core/constants/contstants.dart';
 import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
@@ -20,35 +17,9 @@ import '../../../../core/services/firebase_auth.dart';
 import '../../../../core/services/firebase_firestore.dart';
 import '../../../../core/services/local_notifications.dart';
 
-class HabitItem extends StatefulWidget {
+class HabitItem extends StatelessWidget {
   final HabitModel habitModel;
   const HabitItem({super.key, required this.habitModel});
-
-  @override
-  State<HabitItem> createState() => _HabitItemState();
-}
-
-class _HabitItemState extends State<HabitItem> {
-  late StreamSubscription internetSubscription;
-  bool hasInternet = false;
-  @override
-  void initState() {
-    internetSubscription =
-        InternetConnectionChecker().onStatusChange.listen((status) {
-      final hasInternetConnection =
-          status == InternetConnectionStatus.connected;
-      setState(() {
-        hasInternet = hasInternetConnection;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    internetSubscription.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,19 +29,19 @@ class _HabitItemState extends State<HabitItem> {
         children: [
           BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
             return CustomCheckBox(
-              value: widget.habitModel.isDone,
+              value: habitModel.isDone,
               onChanged: (value) async {
                 FirebaseFirestoreServices firestoreServices =
                     FirebaseFirestoreServices();
                 FireBaseAuthService fireBaseAuthService = FireBaseAuthService();
                 String uid = fireBaseAuthService.auth.currentUser!.uid;
-                widget.habitModel.isDone = !(widget.habitModel.isDone);
-                if (widget.habitModel.isDone) {
+                habitModel.isDone = !(habitModel.isDone);
+                if (habitModel.isDone) {
                   context
                       .read<GetHabitCubit>()
                       .runningHabitsList
-                      .remove(widget.habitModel);
-                  if (!widget.habitModel.isDoneBefore) {
+                      .remove(habitModel);
+                  if (!habitModel.isDoneBefore) {
                     showAnimatedDialog(context);
                     incrementPoints();
                   }
@@ -78,14 +49,14 @@ class _HabitItemState extends State<HabitItem> {
                   context
                       .read<GetHabitCubit>()
                       .completedHabitsList
-                      .remove(widget.habitModel);
+                      .remove(habitModel);
                 }
-                widget.habitModel.isDoneBefore = true;
-                widget.habitModel.save();
-                if (hasInternet) {
-                  firestoreServices.editHabitInFirestore(
-                      habitModel: widget.habitModel, uid: uid);
-                }
+                habitModel.isDoneBefore = true;
+                habitModel.save();
+                // if (hasInternet) {
+                firestoreServices.editHabitInFirestore(
+                    habitModel: habitModel, uid: uid);
+                //   }
                 context.read<GetHabitCubit>().getHabits();
               },
             );
@@ -107,7 +78,7 @@ class _HabitItemState extends State<HabitItem> {
                 SizedBox(
                     width: 200.w,
                     child: Text(
-                      widget.habitModel.title,
+                      habitModel.title,
                       style: Styles.style16,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -130,18 +101,18 @@ class _HabitItemState extends State<HabitItem> {
                                   FireBaseAuthService();
                               String uid =
                                   fireBaseAuthService.auth.currentUser!.uid;
-                              widget.habitModel.isFavourited =
-                                  !widget.habitModel.isFavourited;
-                              widget.habitModel.save();
-                              if (hasInternet) {
-                                await firestoreServices.editHabitInFirestore(
-                                    habitModel: widget.habitModel, uid: uid);
-                              }
+                              habitModel.isFavourited =
+                                  !habitModel.isFavourited;
+                              habitModel.save();
+                              // if (hasInternet) {
+                              await firestoreServices.editHabitInFirestore(
+                                  habitModel: habitModel, uid: uid);
+                              //  }
                               if (context.mounted) {
                                 context
                                     .read<GetFavouriteCubit>()
                                     .favouriteHabitsList
-                                    .remove(widget.habitModel);
+                                    .remove(habitModel);
                                 context
                                     .read<GetFavouriteCubit>()
                                     .getFavouriteHabits();
@@ -149,7 +120,7 @@ class _HabitItemState extends State<HabitItem> {
                             },
                             child: CustomPopUpMenuItem(
                               title: "المفضلة",
-                              icon: widget.habitModel.isFavourited
+                              icon: habitModel.isFavourited
                                   ? FontAwesomeIcons.solidStar
                                   : FontAwesomeIcons.star,
                             )),
@@ -159,7 +130,7 @@ class _HabitItemState extends State<HabitItem> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => EditHabitScreen(
-                                          habitModel: widget.habitModel)));
+                                          habitModel: habitModel)));
                             },
                             child: const CustomPopUpMenuItem(
                                 title: "تعديل",
@@ -172,30 +143,30 @@ class _HabitItemState extends State<HabitItem> {
                                   FireBaseAuthService();
                               String uid =
                                   fireBaseAuthService.auth.currentUser!.uid;
-                              if (hasInternet) {
-                                firestoreServices.deleteHabitFromFirestore(
-                                    habitModel: widget.habitModel, uid: uid);
-                              }
-                              widget.habitModel.delete();
+                              //  if (hasInternet) {
+                              firestoreServices.deleteHabitFromFirestore(
+                                  habitModel: habitModel, uid: uid);
+                              //   }
+                              habitModel.delete();
                               context
                                   .read<GetFavouriteCubit>()
                                   .favouriteHabitsList
-                                  .remove(widget.habitModel);
+                                  .remove(habitModel);
                               context
                                   .read<GetHabitCubit>()
                                   .runningHabitsList
-                                  .remove(widget.habitModel);
+                                  .remove(habitModel);
                               context
                                   .read<GetHabitCubit>()
                                   .completedHabitsList
-                                  .remove(widget.habitModel);
+                                  .remove(habitModel);
                               context.read<GetHabitCubit>().getHabits();
 
                               context
                                   .read<GetFavouriteCubit>()
                                   .getFavouriteHabits();
                               LocalNotifications.cancelNotification(
-                                  id: widget.habitModel.id);
+                                  id: habitModel.id);
                             },
                             child: const CustomPopUpMenuItem(
                               title: "حذف",
