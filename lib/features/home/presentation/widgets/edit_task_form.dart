@@ -140,6 +140,15 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 color: Colors.white,
                 text: 'حذف',
                 onTap: () {
+                  FirebaseFirestoreServices firestoreServices =
+                      FirebaseFirestoreServices();
+                  FireBaseAuthService fireBaseAuthService =
+                      FireBaseAuthService();
+                  String uid = fireBaseAuthService.auth.currentUser!.uid;
+                  if (hasInternet) {
+                    firestoreServices.deleteTaskFromFirestore(
+                        taskModel: widget.taskModel, uid: uid);
+                  }
                   widget.taskModel.delete();
                   context.read<GetTaskCubit>().getTasks();
                   Navigator.pop(context);

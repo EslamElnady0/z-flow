@@ -9,10 +9,13 @@ import 'package:z_flow1/features/drawer/data/cubits/get%20favourite%20cubit/get_
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
 import 'package:z_flow1/features/home/presentation/screens/habits%20screens/edit_habit_screen.dart';
+import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_pop_up_menu_item.dart';
 import 'package:z_flow1/features/home/presentation/widgets/cutom_checkbox.dart';
 import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 
+import '../../../../core/services/firebase_auth.dart';
+import '../../../../core/services/firebase_firestore.dart';
 import '../../../../core/services/local_notifications.dart';
 
 class HabitItem extends StatelessWidget {
@@ -28,7 +31,11 @@ class HabitItem extends StatelessWidget {
           BlocBuilder<GetHabitCubit, GetHabitState>(builder: (context, state) {
             return CustomCheckBox(
               value: habitModel.isDone,
-              onChanged: (value) {
+              onChanged: (value) async {
+                FirebaseFirestoreServices firestoreServices =
+                    FirebaseFirestoreServices();
+                FireBaseAuthService fireBaseAuthService = FireBaseAuthService();
+                String uid = fireBaseAuthService.auth.currentUser!.uid;
                 habitModel.isDone = !(habitModel.isDone);
                 if (habitModel.isDone) {
                   context
@@ -47,7 +54,10 @@ class HabitItem extends StatelessWidget {
                 }
                 habitModel.isDoneBefore = true;
                 habitModel.save();
-
+                if (hasInternet) {
+                  firestoreServices.editHabitInFirestore(
+                      habitModel: habitModel, uid: uid);
+                }
                 context.read<GetHabitCubit>().getHabits();
               },
             );
@@ -85,17 +95,29 @@ class HabitItem extends StatelessWidget {
                     itemBuilder: (context) {
                       return [
                         PopupMenuItem(
-                            onTap: () {
+                            onTap: () async {
+                              FirebaseFirestoreServices firestoreServices =
+                                  FirebaseFirestoreServices();
+                              FireBaseAuthService fireBaseAuthService =
+                                  FireBaseAuthService();
+                              String uid =
+                                  fireBaseAuthService.auth.currentUser!.uid;
                               habitModel.isFavourited =
                                   !habitModel.isFavourited;
                               habitModel.save();
-                              context
-                                  .read<GetFavouriteCubit>()
-                                  .favouriteHabitsList
-                                  .remove(habitModel);
-                              context
-                                  .read<GetFavouriteCubit>()
-                                  .getFavouriteHabits();
+                              if (hasInternet) {
+                                await firestoreServices.editHabitInFirestore(
+                                    habitModel: habitModel, uid: uid);
+                              }
+                              if (context.mounted) {
+                                context
+                                    .read<GetFavouriteCubit>()
+                                    .favouriteHabitsList
+                                    .remove(habitModel);
+                                context
+                                    .read<GetFavouriteCubit>()
+                                    .getFavouriteHabits();
+                              }
                             },
                             child: CustomPopUpMenuItem(
                               title: "المفضلة",
@@ -115,7 +137,17 @@ class HabitItem extends StatelessWidget {
                                 title: "تعديل",
                                 icon: FontAwesomeIcons.penToSquare)),
                         PopupMenuItem(
-                            onTap: () {
+                            onTap: () async {
+                              FirebaseFirestoreServices firestoreServices =
+                                  FirebaseFirestoreServices();
+                              FireBaseAuthService fireBaseAuthService =
+                                  FireBaseAuthService();
+                              String uid =
+                                  fireBaseAuthService.auth.currentUser!.uid;
+                              if (hasInternet) {
+                                firestoreServices.deleteHabitFromFirestore(
+                                    habitModel: habitModel, uid: uid);
+                              }
                               habitModel.delete();
                               context
                                   .read<GetFavouriteCubit>()

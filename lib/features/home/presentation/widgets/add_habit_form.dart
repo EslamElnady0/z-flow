@@ -17,6 +17,10 @@ import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_bu
 import 'package:z_flow1/features/home/presentation/widgets/custom_check_box_container.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
 
+import '../../../../core/services/firebase_auth.dart';
+import '../../../../core/services/firebase_firestore.dart';
+import '../screens/home_screen.dart';
+
 class AddHabitForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController habitController;
@@ -124,8 +128,14 @@ class _AddHabitFormState extends State<AddHabitForm> {
               CustomCancelSaveButton(
                 color: Colorrs.kCyan,
                 text: 'حفظ',
-                onTap: () {
+                onTap: () async {
                   if (widget.formKey.currentState!.validate()) {
+                    FirebaseFirestoreServices firestoreServices =
+                        FirebaseFirestoreServices();
+                    FireBaseAuthService fireBaseAuthService =
+                        FireBaseAuthService();
+                    String uid = fireBaseAuthService.auth.currentUser!.uid;
+
                     widget.formKey.currentState!.save();
                     habitModel = HabitModel(
                         id: id,
@@ -147,7 +157,13 @@ class _AddHabitFormState extends State<AddHabitForm> {
                           id: habitModel.id);
                     }
                     context.read<GetHabitCubit>().getHabits();
-                    Navigator.pop(context);
+                    if (hasInternet) {
+                      await firestoreServices.addHabitToFirestore(
+                          habitModel: habitModel, uid: uid);
+                    }
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
                   } else {}
                 },
               ),

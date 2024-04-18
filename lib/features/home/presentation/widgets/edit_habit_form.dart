@@ -9,11 +9,15 @@ import 'package:z_flow1/core/styles/styles.dart';
 import 'package:z_flow1/core/util/increament_method.dart';
 import 'package:z_flow1/features/home/data/cubit/get%20habit%20cubit/get_habit_cubit.dart';
 import 'package:z_flow1/features/home/data/models/habits%20model/habit_model.dart';
+import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/add_task_textfield.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_check_box_container.dart';
 import 'package:z_flow1/features/home/presentation/widgets/show_animated_dialog.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
+
+import '../../../../core/services/firebase_auth.dart';
+import '../../../../core/services/firebase_firestore.dart';
 
 class EditHabitForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -138,13 +142,23 @@ class _EditHabitFormState extends State<EditHabitForm> {
               CustomCancelSaveButton(
                 color: Colorrs.kCyan,
                 text: 'حفظ',
-                onTap: () {
+                onTap: () async {
                   if (widget.formKey.currentState!.validate()) {
+                    FirebaseFirestoreServices firestoreServices =
+                        FirebaseFirestoreServices();
+                    FireBaseAuthService fireBaseAuthService =
+                        FireBaseAuthService();
+                    String uid = fireBaseAuthService.auth.currentUser!.uid;
+
                     widget.habitModel.title = widget.habitController.text;
                     widget.habitModel.deadline = widget.deadlineController.text;
                     widget.formKey.currentState!.save();
                     widget.habitModel.save();
                     context.read<GetHabitCubit>().getHabits();
+                    if (hasInternet) {
+                      firestoreServices.editHabitInFirestore(
+                          habitModel: widget.habitModel, uid: uid);
+                    }
                     Navigator.pop(context);
                     if (!widget.habitModel.isDoneBefore &&
                         widget.habitModel.isDone) {
