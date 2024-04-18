@@ -6,9 +6,13 @@ import 'package:z_flow1/features/drawer/data/cubits/add%20target%20cubit/add_tar
 import 'package:z_flow1/features/drawer/data/cubits/get%20target%20cubit/get_target_cubit.dart';
 import 'package:z_flow1/features/drawer/data/models/target%20model/target_model.dart';
 import 'package:z_flow1/features/drawer/presentation/widgets/add_target_textfield.dart';
+import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
+
+import '../../../../../core/services/firebase_auth.dart';
+import '../../../../../core/services/firebase_firestore.dart';
 
 class AddTargetScreen extends StatefulWidget {
   const AddTargetScreen({super.key});
@@ -76,8 +80,14 @@ class _AddTargetScreenState extends State<AddTargetScreen> {
                       CustomCancelSaveButton(
                         color: Colorrs.kCyan,
                         text: "حفظ",
-                        onTap: () {
+                        onTap: () async {
                           if (formKey.currentState!.validate()) {
+                            FirebaseFirestoreServices firestoreServices =
+                                FirebaseFirestoreServices();
+                            FireBaseAuthService fireBaseAuthService =
+                                FireBaseAuthService();
+                            String uid =
+                                fireBaseAuthService.auth.currentUser!.uid;
                             TargetModel targetModel = TargetModel(
                                 title: _targetController.text,
                                 createdAt: DateTime.now().toString());
@@ -85,7 +95,13 @@ class _AddTargetScreenState extends State<AddTargetScreen> {
                                 .read<AddTargetCubit>()
                                 .addTarget(targetModel);
                             context.read<GetTargetCubit>().getTargets();
-                            Navigator.pop(context);
+                            if (hasInternet) {
+                              await firestoreServices.addTargetToFirestore(
+                                  targetModel: targetModel, uid: uid);
+                            }
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
                           }
                         },
                       ),

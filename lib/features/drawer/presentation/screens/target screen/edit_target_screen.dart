@@ -5,9 +5,13 @@ import 'package:z_flow1/core/colors/colorrs.dart';
 import 'package:z_flow1/features/drawer/data/cubits/get%20target%20cubit/get_target_cubit.dart';
 import 'package:z_flow1/features/drawer/data/models/target%20model/target_model.dart';
 import 'package:z_flow1/features/drawer/presentation/widgets/add_target_textfield.dart';
+import 'package:z_flow1/features/home/presentation/screens/home_screen.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:z_flow1/features/home/presentation/widgets/custom_cancel_save_button.dart';
 import 'package:z_flow1/features/home/presentation/widgets/title_text_widget.dart';
+
+import '../../../../../core/services/firebase_auth.dart';
+import '../../../../../core/services/firebase_firestore.dart';
 
 class EditTargetScreen extends StatefulWidget {
   final TargetModel targetModel;
@@ -70,22 +74,44 @@ class _EditTargetScreenState extends State<EditTargetScreen> {
                       CustomCancelSaveButton(
                         color: Colors.white,
                         text: "حذف",
-                        onTap: () {
+                        onTap: () async {
+                          FirebaseFirestoreServices firestoreServices =
+                              FirebaseFirestoreServices();
+                          FireBaseAuthService fireBaseAuthService =
+                              FireBaseAuthService();
+                          String uid =
+                              fireBaseAuthService.auth.currentUser!.uid;
+                          if (hasInternet) {
+                            await firestoreServices.deleteTargetFromFirestore(
+                                targetModel: widget.targetModel, uid: uid);
+                          }
                           widget.targetModel.delete();
-                          context.read<GetTargetCubit>().getTargets();
-                          Navigator.pop(context);
+                          if (context.mounted) {
+                            context.read<GetTargetCubit>().getTargets();
+                            Navigator.pop(context);
+                          }
                         },
                       ),
                       const Spacer(),
                       CustomCancelSaveButton(
                         color: Colorrs.kCyan,
                         text: "حفظ",
-                        onTap: () {
+                        onTap: () async {
                           if (formKey.currentState!.validate()) {
+                            FirebaseFirestoreServices firestoreServices =
+                                FirebaseFirestoreServices();
+                            FireBaseAuthService fireBaseAuthService =
+                                FireBaseAuthService();
+                            String uid =
+                                fireBaseAuthService.auth.currentUser!.uid;
                             widget.targetModel.title = _targetController.text;
                             widget.targetModel.save();
 
                             context.read<GetTargetCubit>().getTargets();
+                            if (hasInternet) {
+                              firestoreServices.editTargetInFirestore(
+                                  targetModel: widget.targetModel, uid: uid);
+                            }
                             Navigator.pop(context);
                           }
                         },
